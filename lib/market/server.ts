@@ -5,7 +5,7 @@ import type { Feed } from "./types";
 const lastGood = new Map<string, Feed>();
 
 export async function fetchJson<T>(url: string, revalidate = 900): Promise<T> {
-  const res = await fetch(url, { next: { revalidate }, signal: AbortSignal.timeout(12000), headers: { accept: "application/json" } });
+  const res = await fetch(url, { next: { revalidate }, signal: AbortSignal.timeout(20000), headers: { accept: "application/json" } });
   if (!res.ok) throw new Error(`${res.status} ${url.split("?")[0]}`);
   return (await res.json()) as T;
 }
