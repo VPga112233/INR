@@ -2,6 +2,10 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useStore } from "@/lib/store";
+import { Panel } from "@/components/ui/Panel";
+import { num, signed } from "@/lib/format";
+import { Spark } from "@/components/ui/Spark";
+import { COLORS } from "@/components/charts/theme";
 
 type LiveData = {
   fed?: number;
@@ -54,180 +58,86 @@ export function LiveMarketPulse() {
   };
 
   return (
-    <div
-      style={{
-        background: "linear-gradient(180deg, rgba(20, 21, 26, 0.95) 0%, rgba(13, 14, 18, 0.98) 100%)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        borderRadius: "8px",
-        padding: "14px 18px",
-        marginBottom: "12px",
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.35)",
-      }}
-    >
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <span
-            style={{
-              display: "inline-block",
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: "#10b981",
-              boxShadow: "0 0 10px #10b981",
-            }}
-          />
-          <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", color: "#e5e7eb" }}>
-            LIVE GLOBAL DATA PULSE
-          </span>
-          <span
-            style={{
-              fontSize: "10px",
-              background: "rgba(16, 185, 129, 0.15)",
-              color: "#34d399",
-              border: "1px solid rgba(16, 185, 129, 0.3)",
-              padding: "1px 6px",
-              borderRadius: "4px",
-            }}
-          >
-            ACTIVE FEEDS
-          </span>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <Panel
+      letter="0"
+      title="Live Global Data Pulse"
+      stamp="3 active feeds"
+      source="Alpha Vantage · FRED · ECB via Frankfurter"
+      right={
+        <div className="flex items-center gap-2">
           <button
+            type="button"
             onClick={fetchLive}
             disabled={loading}
-            style={{
-              background: "transparent",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              color: "#9ca3af",
-              fontSize: "11px",
-              padding: "3px 8px",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
+            className="btn h-[24px] px-2 mono text-10 text-text-3 hover:text-text"
           >
-            {loading ? "Refreshing..." : "↻ Refresh"}
+            {loading ? "FETCHING..." : "REFRESH"}
           </button>
           <button
+            type="button"
             onClick={applyToEngine}
-            style={{
-              background: applied ? "#059669" : "rgba(59, 130, 246, 0.15)",
-              border: `1px solid ${applied ? "#10b981" : "rgba(59, 130, 246, 0.4)"}`,
-              color: applied ? "#ffffff" : "#60a5fa",
-              fontSize: "11px",
-              fontWeight: 600,
-              padding: "3px 10px",
-              borderRadius: "4px",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
+            className="btn h-[24px] px-2.5 mono text-10 font-medium border-brand text-brand hover:bg-brand/10 transition-colors"
           >
-            {applied ? "✓ Shock Applied" : "⚡ Sync with Engine"}
+            {applied ? "APPLIED ✓" : "SYNC WITH ENGINE"}
           </button>
         </div>
-      </div>
-
-      {/* 3 Metric Cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "12px",
-        }}
-      >
-        {/* Metric 1: Brent Oil */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.06)",
-            borderRadius: "6px",
-            padding: "10px 14px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-            <span style={{ fontSize: "10px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              🛢️ Brent Crude Oil
-            </span>
-            <span style={{ fontSize: "9px", color: "#60a5fa" }}>{data?.brentSource || "Alpha Vantage"}</span>
+      }
+    >
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+        {/* Metric 1: Brent Crude Oil */}
+        <div className="p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="kpi-l">Brent Crude Oil</span>
+            <span className="tag text-10">{data?.brentSource || "Alpha Vantage"}</span>
           </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-            <span style={{ fontSize: "18px", fontWeight: 700, color: "#f3f4f6" }}>
-              {data?.brent ? `$${data.brent.toFixed(2)}` : "--"}
-            </span>
-            <span style={{ fontSize: "11px", color: "#9ca3af" }}>/ bbl</span>
+          <div className="kpi-v">
+            ${data?.brent ? num(data.brent, 2) : "--"}
+            <small>/bbl</small>
           </div>
-          <div style={{ fontSize: "10px", color: "#6b7280", marginTop: "2px" }}>
-            As of: {data?.brentAsOf || "Latest trade"}
+          <div className="flex items-center justify-between text-11 mt-1.5 text-text-3">
+            <span className="mono">As of {data?.brentAsOf || "Latest trade"}</span>
+            <span className="delta flat">Live Spot</span>
           </div>
         </div>
 
         {/* Metric 2: Fed Funds Rate */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.06)",
-            borderRadius: "6px",
-            padding: "10px 14px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-            <span style={{ fontSize: "10px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              🏦 US Fed Funds Rate
-            </span>
-            <span style={{ fontSize: "9px", color: "#a78bfa" }}>FRED</span>
+        <div className="p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="kpi-l">US Fed Funds Rate</span>
+            <span className="tag text-10">FRED</span>
           </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-            <span style={{ fontSize: "18px", fontWeight: 700, color: "#f3f4f6" }}>
-              {data?.fed ? `${data.fed.toFixed(2)}%` : "--"}
-            </span>
-            <span style={{ fontSize: "11px", color: "#9ca3af" }}>target level</span>
+          <div className="kpi-v">
+            {data?.fed ? num(data.fed, 2) : "--"}
+            <small>%</small>
           </div>
-          <div style={{ fontSize: "10px", color: "#6b7280", marginTop: "2px" }}>
-            As of: {data?.fedAsOf || "Official release"}
+          <div className="flex items-center justify-between text-11 mt-1.5 text-text-3">
+            <span className="mono">As of {data?.fedAsOf || "Monthly release"}</span>
+            <span className="delta flat">Policy Target</span>
           </div>
         </div>
 
         {/* Metric 3: USD / INR */}
-        <div
-          style={{
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.06)",
-            borderRadius: "6px",
-            padding: "10px 14px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-            <span style={{ fontSize: "10px", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              🇮🇳 USD / INR Spot
-            </span>
-            <span style={{ fontSize: "9px", color: "#34d399" }}>ECB / Frankfurter</span>
+        <div className="p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-2 mb-1.5">
+            <span className="kpi-l">USD/INR Reference</span>
+            <span className="tag text-10">ECB / Frank</span>
           </div>
-          <div style={{ display: "flex", alignItems: "baseline", gap: "6px" }}>
-            <span style={{ fontSize: "18px", fontWeight: 700, color: "#f3f4f6" }}>
-              {usdinrFeed?.value ? `₹${usdinrFeed.value.toFixed(2)}` : "--"}
-            </span>
-            {usdinrFeed?.change != null && (
-              <span
-                style={{
-                  fontSize: "11px",
-                  color: usdinrFeed.change >= 0 ? "#f87171" : "#34d399",
-                }}
-              >
-                {usdinrFeed.change >= 0 ? `+${usdinrFeed.change.toFixed(2)}` : usdinrFeed.change.toFixed(2)}
+          <div className="kpi-v">
+            ₹{usdinrFeed?.value ? num(usdinrFeed.value, 2) : "--"}
+          </div>
+          <div className="flex items-center justify-between text-11 mt-1.5 text-text-3">
+            <span className="mono">As of {usdinrFeed?.asOf || "Daily reference"}</span>
+            {usdinrFeed?.change != null ? (
+              <span className={`delta ${usdinrFeed.change > 0 ? "neg" : usdinrFeed.change < 0 ? "pos" : "flat"}`}>
+                {signed(usdinrFeed.change, 2)}
               </span>
+            ) : (
+              <span className="delta flat">0.00</span>
             )}
-          </div>
-          <div style={{ fontSize: "10px", color: "#6b7280", marginTop: "2px" }}>
-            As of: {usdinrFeed?.asOf || "Daily reference"}
           </div>
         </div>
       </div>
-    </div>
+    </Panel>
   );
 }
 // the end
