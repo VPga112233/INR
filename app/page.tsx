@@ -7,16 +7,12 @@ import { WhatThisMeans } from "@/components/stress/WhatThisMeans";
 import { NextSteps } from "@/components/stress/NextSteps";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ScenarioBadge } from "@/components/stress/ScenarioBadge";
-import { LiveEventLoader } from "@/components/stress/LiveEventLoader";
-import { LiveBanner } from "@/components/stress/LiveBanner";
 
 export default function StressEngine() {
   return (
     <div className="stress">
-      <LiveEventLoader />
       <ScenarioInputs />
       <div className="col cq">
-        <LiveBanner />
         <PageHeader
           index="01"
           group="SIMULATE"
