@@ -7,6 +7,7 @@ import { WhatThisMeans } from "@/components/stress/WhatThisMeans";
 import { NextSteps } from "@/components/stress/NextSteps";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ScenarioBadge } from "@/components/stress/ScenarioBadge";
+import { LiveMarketPulse } from "@/components/stress/LiveMarketPulse";
 
 export default function StressEngine() {
   return (
@@ -20,6 +21,7 @@ export default function StressEngine() {
           desc="Move a lever. Watch the rupee, prices, reserves and banks react in real time."
           right={<ScenarioBadge />}
         />
+        <LiveMarketPulse />
         <KpiStrip />
         <FanChart />
         <div className="duo">
