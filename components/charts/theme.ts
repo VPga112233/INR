@@ -17,3 +17,4 @@ export function fontFamily(kind: "mono" | "sans" = "mono") {
   const v = getComputedStyle(document.documentElement).getPropertyValue(kind === "mono" ? "--font-plex-mono" : "--font-plex-sans").trim();
   return v || (kind === "mono" ? "monospace" : "sans-serif");
 }
+// the end

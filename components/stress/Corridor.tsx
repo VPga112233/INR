@@ -65,3 +65,4 @@ export function Corridor({ className = "a-corridor" }: { className?: string } = 
     </Panel>
   );
 }
+// the end

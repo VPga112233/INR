@@ -55,3 +55,4 @@ export function Ticker() {
     </div>
   );
 }
+// the end

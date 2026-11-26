@@ -34,3 +34,4 @@ export function makeNews(seed = Math.random): NewsItem {
   n += 1;
   return { id: `w${Date.now()}-${n}`, ts: Date.now(), ...t(seed) };
 }
+// the end

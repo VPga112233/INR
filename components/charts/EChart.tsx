@@ -75,3 +75,4 @@ export const tooltipBase = {
   textStyle: { color: COLORS.text2, fontSize: 11 },
   extraCssText: "border-radius:4px;box-shadow:none;",
 };
+// the end

@@ -14,3 +14,4 @@ export const NAV: { href: string; label: string; icon: LucideIcon; group: Group;
   { href: "/policy", label: "Policy Lab", icon: Scale, group: "POLICY", cmd: "POLICY", desc: "Ideal rupee, scorecard, roadmap" },
   { href: "/sources", label: "Sources & Assumptions", icon: BookOpen, group: "REFERENCE", cmd: "SOURCES", desc: "Data, coefficients, method" },
 ];
+// the end

@@ -37,3 +37,4 @@ export function Panel({ letter, title, right, source, stamp, model, flush, class
     </section>
   );
 }
+// the end

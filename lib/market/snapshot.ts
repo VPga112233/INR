@@ -19,3 +19,4 @@ export function snapshotFeed(id: FeedId): Feed {
       return { id, label: "Dollar index", value: ticker.dollarIndex, change: null, series: [], asOf: SNAPSHOT_DATE, source: "Team deck snapshot", status: "snapshot", anchors: true };
   }
 }
+// the end

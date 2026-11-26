@@ -110,3 +110,4 @@ export function runModel(s: Scenario, c: Coefficients): ModelOutput {
     totals: { oil: oilQ * n, fpi: s.fpi * n, fed: fedQ * n, repo: repoQ * n, rbi: s.rbi * n, unabsorbed: unabsorbed * n },
   };
 }
+// the end

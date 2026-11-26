@@ -61,3 +61,4 @@ export const COEF_META: CoefMeta[] = [
   { key: "CALL_BASE", label: "Call rate anchor", unit: "%", tag: "Team assumption", note: "Call rate when the liquidity surplus is zero, before repo changes", step: 0.01 },
   { key: "CALL_LIQ_SENS", label: "Call rate fall per ₹1L Cr surplus", unit: "pp", tag: "Team assumption", note: "More surplus pushes the call rate towards the SDF floor", step: 0.01 },
 ];
+// the end

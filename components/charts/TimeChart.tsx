@@ -142,3 +142,4 @@ export function TimeChart({ data, color = COLORS.brandSoft, area = true, height,
     </div>
   );
 }
+// the end

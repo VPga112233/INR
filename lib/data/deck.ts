@@ -150,3 +150,4 @@ export const sources = [ // show in Sources screen; add URLs where known
   "Icra via IPA: oil-firm losses", "CNBC-TV18: hike or protect growth?", "OneTradeJournal: 2013 taper-tantrum data",
   "Live feeds: ECB reference rates via Frankfurter; FRED (St. Louis Fed)",
 ];
+// the end

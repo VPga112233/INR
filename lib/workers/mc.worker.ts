@@ -5,3 +5,4 @@ self.onmessage = (e: MessageEvent<{ id: number; input: MCInput }>) => {
   const result = simulate(e.data.input);
   (self as unknown as Worker).postMessage({ id: e.data.id, result });
 };
+// the end

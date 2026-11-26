@@ -39,3 +39,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(fallback(meta.id, snapshotFeed(meta.id)));
   }
 }
+// the end

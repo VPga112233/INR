@@ -53,3 +53,4 @@ export function KpiStrip() {
     </section>
   );
 }
+// the end

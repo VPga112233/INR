@@ -15,3 +15,4 @@ export function Spark({ data, width = 40, height = 14, color = COLORS.text2, fil
     </svg>
   );
 }
+// the end

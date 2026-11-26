@@ -113,3 +113,4 @@ export function FanChart() {
     </Panel>
   );
 }
+// the end

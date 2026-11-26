@@ -9,3 +9,4 @@ const nextConfig = {
   ...(STATIC ? { output: "export", trailingSlash: true, images: { unoptimized: true }, basePath: process.env.BASE_PATH || "" } : {}),
 };
 export default nextConfig;
+// the end

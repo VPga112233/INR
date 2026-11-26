@@ -32,3 +32,4 @@ export const dayMonth = (iso: string) => {
   const d = new Date(iso + (iso.length === 10 ? "T00:00:00Z" : ""));
   return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", timeZone: "UTC" });
 };
+// the end

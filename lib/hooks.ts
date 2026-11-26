@@ -90,3 +90,4 @@ export function useNow(intervalMs = 1000) {
   }, [intervalMs]);
   return now;
 }
+// the end

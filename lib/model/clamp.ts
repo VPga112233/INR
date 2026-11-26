@@ -28,3 +28,4 @@ export function applyDelta(s: Scenario, d: Delta): Scenario {
   if (d.book !== undefined) n.book = d.book;
   return clampScenario(n);
 }
+// the end

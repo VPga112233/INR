@@ -26,3 +26,4 @@ export const yearAgo = () => {
   d.setUTCDate(d.getUTCDate() - 7);
   return d.toISOString().slice(0, 10);
 };
+// the end

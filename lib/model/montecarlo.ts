@@ -40,3 +40,4 @@ export function simulate({ start, end, weeks, volAnnual, paths, seed = 20261110 
   out.medianEnd = out.p50[out.p50.length - 1];
   return out;
 }
+// the end

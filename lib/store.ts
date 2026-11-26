@@ -100,3 +100,4 @@ export const useStore = create<State>((set, get) => ({
   setPalette: (v) => set({ paletteOpen: v }),
   setFeeds: (f, t) => set({ feeds: { ...get().feeds, ...f }, telemetry: { ...get().telemetry, ...t } }),
 }));
+// the end

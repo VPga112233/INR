@@ -44,3 +44,4 @@ export async function GET(): Promise<NextResponse> {
     return NextResponse.json({ ok: false, error: String(e) }, { status: 500 });
   }
 }
+// the end

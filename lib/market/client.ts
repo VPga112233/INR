@@ -25,3 +25,4 @@ export async function fetchUsdInrDirect(): Promise<Feed> {
   }
   return snapshotFeed("usdinr");
 }
+// the end

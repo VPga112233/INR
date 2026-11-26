@@ -329,3 +329,4 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 .tbl th.text-right, .tbl td.text-right { text-align: right; }
 .tbl tbody tr[data-active="true"] td { background-color: var(--color-panel-2); }
 .duo > * { grid-area: auto !important; }
+/* the end */

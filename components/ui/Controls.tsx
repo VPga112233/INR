@@ -81,3 +81,4 @@ export function Tabs<T extends string>({ options, value, onChange }: { options: 
     </div>
   );
 }
+// the end

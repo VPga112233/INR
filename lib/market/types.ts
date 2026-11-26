@@ -13,3 +13,4 @@ export type Feed = {
   /** true when series are sparse deck anchor points, not daily data */
   anchors?: boolean;
 };
+// the end
