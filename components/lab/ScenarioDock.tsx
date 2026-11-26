@@ -22,7 +22,7 @@ export function ScenarioDock({ levers = true }: { levers?: boolean }) {
           <button key={p.id} className="chip" data-active={preset === p.id} onClick={() => applyPreset(p.id)}>
             {p.tone === "ours" && <span className="w-1.5 h-1.5 bg-brand" />}
             {p.tone === "warn" && <span className="w-1.5 h-1.5 bg-warn" />}
-            {p.label.replace(" · 10 Nov 2026", "")}
+            {p.label.replace(" · 25 Nov 2026", "")}
           </button>
         ))}
         {preset === "custom" && <span className="chip" data-active="true">Custom</span>}

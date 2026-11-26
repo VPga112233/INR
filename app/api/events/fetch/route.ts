@@ -1,21 +1,42 @@
-import type { NextRequest } from "next/server";
-import type { NextResponse } from "next/server";
-import { writeFileSync } from "fs";
+import { NextResponse } from "next/server";
+import { mkdirSync, writeFileSync } from "fs";
+import path from "path";
 
-const OIL_URL = `https://commodities-api.com/api/latest?base=USD&symbols=BRENT&apikey=${process.env.OIL_API_KEY}`;
-const FED_URL = `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${process.env.FRED_API_KEY}&observation_start=2024-01-01`;
+export const dynamic = "force-dynamic";
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
+  const apiKey = process.env.FRED_API_KEY;
+  if (!apiKey || apiKey === "YOUR_FRED_API_KEY") {
+    return NextResponse.json(
+      { ok: false, error: "FRED_API_KEY is not configured in .env.local" },
+      { status: 500 }
+    );
+  }
+
+  const fedUrl = `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${encodeURIComponent(apiKey)}&observation_start=2024-01-01&file_type=json`;
+
   try {
-// Removed Oil price fetch – only Fed rate is needed
-    const fedRes = await fetch(FED_URL);
+    const fedRes = await fetch(fedUrl, { cache: "no-store" });
+    if (!fedRes.ok) {
+      throw new Error(`FRED API returned ${fedRes.status}`);
+    }
     const fedJson = await fedRes.json();
-    const latestObs = fedJson?.observations?.slice(-1)[0];
-    const fedRate = Number(latestObs?.value ?? 0);
+    const observations = Array.isArray(fedJson?.observations) ? fedJson.observations : [];
+    const latestObs = [...observations].reverse().find((o) => o?.value !== "." && Number.isFinite(Number(o?.value)));
+    if (!latestObs) {
+      throw new Error("No valid FEDFUNDS observation found");
+    }
+    const fedRate = Number(latestObs.value);
 
-    const payload = { fed: fedRate, fetchedAt: new Date().toISOString() };
-    const outPath = `${process.cwd()}/public/events/latest.json`;
-    writeFileSync(outPath, JSON.stringify(payload, null, 2));
+    const payload = {
+      fed: fedRate,
+      asOf: latestObs.date ?? null,
+      fetchedAt: new Date().toISOString(),
+    };
+
+    const outDir = path.join(process.cwd(), "public", "events");
+    mkdirSync(outDir, { recursive: true });
+    writeFileSync(path.join(outDir, "latest.json"), JSON.stringify(payload, null, 2));
 
     return NextResponse.json({ ok: true, data: payload });
   } catch (e) {

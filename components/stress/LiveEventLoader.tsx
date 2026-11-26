@@ -1,24 +1,26 @@
+"use client";
 import { useEffect } from "react";
 import { useStore } from "@/lib/store";
 
 export function LiveEventLoader() {
-  const setScenario = useStore((s) => s.setScenario);
+  const setParam = useStore((s) => s.setParam);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      fetch("/events/latest.json")
-        .then((r) => r.json())
+    const load = () => {
+      fetch("/events/latest.json", { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
         .then((data) => {
-          setScenario((prev) => ({
-            ...prev,
-            // keep existing oil price (brent) unchanged – only update Fed rate
-            fed: data.fed ?? prev.fed
-          }));
+          if (data && typeof data.fed === "number" && Number.isFinite(data.fed)) {
+            setParam("fed", data.fed);
+          }
         })
-        .catch(console.error);
-    }, 60_000); // every minute
-    return () => clearInterval(id);
-  }, [setScenario]);
+        .catch(() => {});
+    };
 
-  return null; // component only runs the side‑effect
+    load();
+    const id = setInterval(load, 60_000);
+    return () => clearInterval(id);
+  }, [setParam]);
+
+  return null;
 }

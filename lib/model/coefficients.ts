@@ -2,7 +2,7 @@
 // Sources & Assumptions screen; edits re-run the Stress Engine instantly.
 
 export const BASELINE = {
-  USDINR0: 93.8,
+  USDINR0: 92.24,
   BRENT0: 113.2,
   CPI0: 5.54,
   CAD0: 0.6, // % of GDP

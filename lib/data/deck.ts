@@ -1,10 +1,10 @@
 // Deck snapshot data. Figures are taken exactly from the team's final deck
 // (The Black Swans · MacroMinds 3.0). Do not edit values here without the team.
 
-export const SNAPSHOT_DATE = "2026-11-10";
+export const SNAPSHOT_DATE = "2026-11-25";
 
 export const ticker = {
-  usdinr: 93.8, brent: 113.2, us10y: 5.2, in10y: 7.17, dollarIndex: 102,
+  usdinr: 92.24, brent: 113.2, us10y: 5.2, in10y: 7.17, dollarIndex: 102,
   repo: 5.50, sdf: 5.25, msf: 5.75, callRate: 5.69, reservesB: 734.6,
   cpi: 5.54, wpi: 11.4, fwdPremium1M: 7.62, reer: 92.2, fedFunds: "3.75–4.00",
 };
@@ -15,7 +15,7 @@ export const rupeeAnchors: Anchor[] = [ // snapshot fallback: anchor points only
   { date: "2025-04-01", value: 87.0, label: "FY26 start" },
   { date: "2026-05-15", value: 96.96, label: "Record low (May 2026)" },
   { date: "2026-10-29", value: 95.26, label: "Pre-midterms" },
-  { date: "2026-11-10", value: 93.8, label: "Post-midterms rebound" },
+  { date: "2026-11-25", value: 92.24, label: "25 Nov 2026 (ECB/Frankfurter)" },
 ];
 
 export const events = [

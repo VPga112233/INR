@@ -45,7 +45,7 @@ function useFrames() {
     const series = live ? f.series : [];
     let j = 0;
     let lastInr = live ? series[0][1] : rup[0][1];
-    for (let t = Date.parse("2026-01-01T00:00:00Z"); t <= Date.parse("2026-11-10T00:00:00Z"); t += 86400000) {
+    for (let t = Date.parse("2026-01-01T00:00:00Z"); t <= Date.parse("2026-11-25T00:00:00Z"); t += 86400000) {
       const dt = new Date(t);
       if (dt.getUTCDay() === 0 || dt.getUTCDay() === 6) continue;
       const d = dt.toISOString().slice(0, 10);
