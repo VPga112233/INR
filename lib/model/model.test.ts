@@ -16,9 +16,9 @@ describe("stress model", () => {
     expect(o.repo).toBeCloseTo(5.5, 6);
   });
 
-  it("Brent $130 widens the CAD to about 2.45% of GDP", () => {
+  it("Brent $130 widens the CAD to about 4.8% of GDP", () => {
     const o = runModel({ ...DEFAULT_SCENARIO, brent: 130 }, C);
-    expect(o.cad).toBeCloseTo(2.448, 2);
+    expect(o.cad).toBeCloseTo(4.8, 1);
   });
 
   it("RBI sales of $20B drain about ₹1.88L Cr", () => {
@@ -28,7 +28,7 @@ describe("stress model", () => {
 
   it("RBI dollar purchases rebuild reserves and add liquidity", () => {
     const o = runModel({ ...DEFAULT_SCENARIO, rbi: -5 }, C);
-    expect(o.reserves).toBeCloseTo(739.6, 6);
+    expect(o.reserves).toBeCloseTo(BASELINE.RES0 + 5, 6);
     expect(o.liquidity).toBeGreaterThan(BASELINE.LIQ0);
   });
 

@@ -19,9 +19,9 @@ const DETAIL: Record<string, { what: string; tone: "bad" | "good" | "neutral" }>
   "2026-11-06": { what: "US midterms settle nerves: $4B of foreign money returns in a week. The rupee rebounds to ₹93.8.", tone: "good" },
   "2026-11-12": { what: "MoSPI data shows October CPI surging to 6.09%, crossing the RBI's 6% ceiling for the first time in two years.", tone: "bad" },
   "2026-11-20": { what: "RBI forex reserves fall to $700.9B (16-week low) as central bank steps in to calm currency swings.", tone: "neutral" },
-  "2026-11-25": { what: "Record ₹1.22L+ Cr ($15B) Nov FPI equity buying lifts sentiment, but domestic cash deficit swings to -₹47,641 Cr with Call rate touching 5.76%.", tone: "good" },
+  "2026-11-27": { what: "RBI eases daily CRR requirement from 99% to 90% to release ₹40,000 Cr durable cash; forex reserves report at $700.9B.", tone: "good" },
 };
-const LIQ_DATES = ["2026-02-27", "2026-03-23", "2026-09-07", "2026-10-22", "2026-11-06", "2026-11-20", "2026-11-25"];
+const LIQ_DATES = ["2026-02-27", "2026-03-23", "2026-09-07", "2026-10-22", "2026-11-06", "2026-11-20", "2026-11-27"];
 
 const interp = (pts: [string, number][], d: string) => {
   if (d <= pts[0][0]) return pts[0][1];
@@ -48,7 +48,7 @@ function useFrames() {
     const series = live ? f.series : [];
     let j = 0;
     let lastInr = live ? series[0][1] : rup[0][1];
-    for (let t = Date.parse("2026-01-01T00:00:00Z"); t <= Date.parse("2026-11-25T00:00:00Z"); t += 86400000) {
+    for (let t = Date.parse("2026-01-01T00:00:00Z"); t <= Date.parse("2026-11-27T00:00:00Z"); t += 86400000) {
       const dt = new Date(t);
       if (dt.getUTCDay() === 0 || dt.getUTCDay() === 6) continue;
       const d = dt.toISOString().slice(0, 10);

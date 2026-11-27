@@ -13,7 +13,7 @@ export function Corridor({ className = "a-corridor" }: { className?: string } = 
   const ticks = [5.0, 5.25, 5.5, 5.75, 6.0, 6.25, 6.5, 6.75];
   const pos = o.callRate >= o.msf - 0.02 ? "at the MSF ceiling" : o.callRate <= o.sdf + 0.02 ? "at the SDF floor" : o.callRate > o.repo ? "above repo" : "below repo";
   return (
-    <Panel className={className} letter="f" title="RBI corridor" model source="RBI MPC Oct 2026; call 22 Oct" stamp="% p.a.">
+    <Panel className={className} letter="f" title="RBI corridor" model source="RBI MPC Oct 2026; WACR 27 Nov" stamp="% p.a.">
       <div className="relative h-[132px] mt-3">
         {/* base corridor ghost */}
         <div className="absolute top-[34px] h-[40px] border border-dashed border-border-2 rounded-xs" style={{ left: x(B.SDF0), width: `calc(${x(B.MSF0)} - ${x(B.SDF0)})` }} />
@@ -32,7 +32,7 @@ export function Corridor({ className = "a-corridor" }: { className?: string } = 
           </div>
         ))}
         {/* actual call rate */}
-        <div className="absolute top-[47px] -translate-x-1/2" style={{ left: x(B.ACTUAL_CALL) }} title="Actual call rate 5.69% (22 Oct)">
+        <div className="absolute top-[47px] -translate-x-1/2" style={{ left: x(B.ACTUAL_CALL) }} title={`Actual call rate ${B.ACTUAL_CALL}% (27 Nov)`}>
           <div className="w-[10px] h-[10px] rounded-full border-2 border-text-2 bg-panel" />
         </div>
         {/* model call rate */}
@@ -55,7 +55,7 @@ export function Corridor({ className = "a-corridor" }: { className?: string } = 
         </div>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full border border-text-2" />
-          <span className="text-text-3">Actual 22 Oct</span>
+          <span className="text-text-3">Actual 27 Nov</span>
           <span className="mono text-text ml-auto">{pct(B.ACTUAL_CALL)}</span>
         </div>
       </div>

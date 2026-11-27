@@ -40,7 +40,7 @@ export function KpiRow() {
     { l: "Combined fiscal deficit", v: `${num(headline.combinedFiscal, 1)}%`, s: "of GDP, FY26", tone: "warn" },
     { l: "Current Account Deficit", v: `${num(headline.cadPctGDP, 1)}%`, s: "of GDP vs 4.8% in 2013", tone: "pos" },
     { l: "Ind-US bond rate spread", v: `${headline.spreadBps} bps`, s: "10Y, did not stop outflows", tone: "flat" },
-    { l: "REER", v: num(ticker.reer, 1), s: "40-currency, Sep 2026", tone: "flat" },
+    { l: "REER", v: num(ticker.reer, 1), s: "40-currency, 27 Nov 2026", tone: "flat" },
   ];
   return (
     <section className="panel col-span-12">
@@ -149,7 +149,7 @@ export function ReservesChart() {
     series: [{
       type: "line", data: reservesWeekly.map((r) => r[1]), symbol: "circle", symbolSize: 5, lineStyle: { color: COLORS.s2, width: 1.75 }, itemStyle: { color: COLORS.s2 }, areaStyle: { color: alpha(COLORS.s2, 0.1) },
       markPoint: { symbol: "pin", symbolSize: 0, label: { show: true, color: COLORS.text2, fontSize: 10, formatter: (p: { value: number; name: string }) => `${p.name} $${num(p.value, 1)}B`, offset: [0, -10] }, data: (() => { const v = reservesWeekly.map((r) => r[1]); const hi = v.indexOf(Math.max(...v)); const lo = v.indexOf(Math.min(...v)); return [{ name: "Peak", coord: [dayMonth(reservesWeekly[hi][0]), v[hi]], value: v[hi] }, { name: "Low", coord: [dayMonth(reservesWeekly[lo][0]), v[lo]], value: v[lo] }]; })() },
-      markLine: { silent: true, symbol: "none", data: [{ yAxis: 734.6 }], lineStyle: { color: COLORS.border2, type: [3, 3] }, label: { formatter: "Model start $734.6B", color: COLORS.text3, fontSize: 10, position: "insideStartTop" } },
+      markLine: { silent: true, symbol: "none", data: [{ yAxis: 700.9 }], lineStyle: { color: COLORS.border2, type: [3, 3] }, label: { formatter: "Reserves $700.9B (20 Nov)", color: COLORS.text3, fontSize: 10, position: "insideStartTop" } },
     }],
   }), []);
   return (

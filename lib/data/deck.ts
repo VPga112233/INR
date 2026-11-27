@@ -1,10 +1,10 @@
 // Deck snapshot data. Figures are taken exactly from the team's final deck
 // (The Black Swans · MacroMinds 3.0). Do not edit values here without the team.
 
-export const SNAPSHOT_DATE = "2026-11-25";
+export const SNAPSHOT_DATE = "2026-11-27";
 
 export const ticker = {
-  usdinr: 92.24, brent: 91.8, us10y: 4.91, in10y: 7.17, dollarIndex: 104.2,
+  usdinr: 92.98, brent: 91.8, us10y: 4.91, in10y: 7.17, dollarIndex: 104.2,
   repo: 5.50, sdf: 5.25, msf: 5.75, callRate: 5.76, reservesB: 700.9,
   cpi: 6.09, wpi: 11.4, fwdPremium1M: 7.62, reer: 91.3, fedFunds: "3.75–4.00",
 };
@@ -15,7 +15,7 @@ export const rupeeAnchors: Anchor[] = [ // snapshot fallback: anchor points only
   { date: "2025-04-01", value: 87.0, label: "FY26 start" },
   { date: "2026-05-15", value: 96.96, label: "Record low (May 2026)" },
   { date: "2026-10-29", value: 95.26, label: "Pre-midterms" },
-  { date: "2026-11-25", value: 92.24, label: "25 Nov 2026 (ECB/Frankfurter)" },
+  { date: "2026-11-27", value: 92.98, label: "27 Nov 2026 (Spot close)" },
 ];
 
 export const events = [
@@ -28,13 +28,13 @@ export const events = [
   { date: "2026-11-06", label: "US midterms: $4B FPI inflow in a week" },
   { date: "2026-11-12", label: "Oct CPI breaches 6% ceiling at 6.09%" },
   { date: "2026-11-20", label: "Forex reserves at $700.9B (16-wk low)" },
-  { date: "2026-11-25", label: "Record ₹1.2L+ Cr Nov FPI inflow; Call spikes to 5.76%" },
+  { date: "2026-11-27", label: "RBI relaxes CRR to 90% (₹40K Cr injected); FPI Nov record ₹1.22L+ Cr" },
 ];
 
 export const brent2026: Anchor[] = [
   { date: "2026-02-20", value: 72.9 }, { date: "2026-03-31", value: 118.4, label: "Peak" },
   { date: "2026-07-01", value: 71.6, label: "Ceasefire" }, { date: "2026-10-15", value: 113.2, label: "Re-escalation" },
-  { date: "2026-11-25", value: 91.8, label: "25 Nov anchor" },
+  { date: "2026-11-27", value: 91.8, label: "27 Nov anchor" },
 ];
 
 export const reservesWeekly: [string, number][] = [ // $B, week ending
@@ -50,7 +50,7 @@ export const fpiMonthly: [string, number][] = [ // $B net equity flow
 export const fpiKpis = { outflowMonths: "7 of 11", marchRecord: "₹1.18L Cr", nov2to9Inflow: "₹53.7K Cr", novTotalInflow: "₹1.22L+ Cr (All-time high)", in10y: "7.48% → 7.17%" };
 
 export const liquidity: [string, number][] = [ // ₹ lakh crore
-  ["Feb–Mar", 2.5], ["23 Mar", -0.7], ["7 Sep", 11.6], ["22 Oct", 0], ["6 Nov", 2.3], ["20 Nov", 0.4], ["25 Nov", -0.48],
+  ["Feb–Mar", 2.5], ["23 Mar", -0.7], ["7 Sep", 11.6], ["22 Oct", 0], ["6 Nov", 2.3], ["20 Nov", 0.4], ["27 Nov", -0.42],
 ];
 
 export const rbiDefence = { netSpotSalesFY26B: 53, forwardShortBookB: 103, grossSalesFY26B: 195, reserveDrainB: 51, rupeesPerBillionCr: 9400 };

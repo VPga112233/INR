@@ -16,7 +16,7 @@ import { Tabs } from "@/components/ui/Controls";
 export const PCOL: Record<PresetId, string> = {
   base: "#A3A3AD", oil130: COLORS.warn, fed25: COLORS.s2, book200: "#4FB0B8", stagflation: "#D98B5F",
 };
-const short = (id: PresetId) => presetById(id)!.label.replace(" · 25 Nov 2026", "");
+const short = (id: PresetId) => presetById(id)!.label.replace(" · 27 Nov 2026", "");
 
 function useRuns(h: 1 | 4) {
   const coef = useStore((s) => s.coef);

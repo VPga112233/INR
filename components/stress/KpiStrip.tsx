@@ -20,7 +20,7 @@ export function KpiStrip() {
     { label: "CAD, % of GDP", unit: "%", base: B.CAD0, value: o.cad, d: 2, up: "bad", hist: [0.6] },
     { label: "Usable reserves", unit: "$B", base: baseUsable, value: o.usable, d: 1, up: "good", hist: reservesWeekly.map((r) => r[1] - book) },
     { label: "Bank liquidity", unit: "₹L Cr", base: B.LIQ0, value: o.liquidity, d: 2, up: "good", hist: liquidity.map((l) => l[1]) },
-    { label: "Call rate", unit: "%", base: B.ACTUAL_CALL, value: o.callRate, d: 2, up: "bad", hist: [5.69] },
+    { label: "Call rate", unit: "%", base: B.ACTUAL_CALL, value: o.callRate, d: 2, up: "bad", hist: [B.ACTUAL_CALL] },
   ];
   return (
     <section className="panel">
@@ -43,7 +43,7 @@ export function KpiStrip() {
               <div className="flex items-center gap-2 text-11">
                 <span className={`delta ${tone}`}>{signed(delta, k.d)}</span>
                 <span className="text-text-3 truncate">
-                  {k.label === "Call rate" ? "vs 5.69% actual" : `Base ${k.prefix ?? ""}${num(k.base, k.d)}`}
+                  {k.label === "Call rate" ? `vs ${num(B.ACTUAL_CALL, 2)}% actual` : `Base ${k.prefix ?? ""}${num(k.base, k.d)}`}
                 </span>
               </div>
             </div>

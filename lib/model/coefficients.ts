@@ -2,19 +2,19 @@
 // Sources & Assumptions screen; edits re-run the Stress Engine instantly.
 
 export const BASELINE = {
-  USDINR0: 92.24,
-  BRENT0: 113.2,
-  CPI0: 5.54,
+  USDINR0: 92.98,
+  BRENT0: 91.8,
+  CPI0: 6.09,
   CAD0: 0.6, // % of GDP
-  RES0: 734.6, // $B
-  LIQ0: 2.3, // ₹ lakh crore surplus
+  RES0: 700.9, // $B
+  LIQ0: -0.42, // ₹ lakh crore deficit (27 Nov 2026)
   REPO0: 5.5,
   SDF0: 5.25,
   MSF0: 5.75,
   FWDPREM_NO_CURBS: 5.58,
   CURBS_PREMIUM_ADD: 2.04, // curbs-ON premium = 7.62
   UNHEDGED_ECB: 87, // $B
-  ACTUAL_CALL: 5.69, // 22 Oct 2026
+  ACTUAL_CALL: 5.76, // 27 Nov 2026
 } as const;
 
 export type CoefKey =
@@ -40,7 +40,7 @@ export const DEFAULT_COEFFICIENTS: Coefficients = {
   MONTHLY_IMPORTS: 86,
   FWD_PREM_PER_1PCT: 0.1,
   VOL_ANNUAL: 6,
-  CALL_BASE: 5.6,
+  CALL_BASE: 5.72,
   CALL_LIQ_SENS: 0.1,
 };
 
