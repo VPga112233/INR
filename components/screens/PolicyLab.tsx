@@ -17,15 +17,14 @@ const RUPEE_BANDS = [
   { from: 94.5, to: 100, label: "Weak", color: COLORS.neg },
   { from: 90, to: 94.5, label: "RBI balanced", color: COLORS.warn },
   { from: 87, to: 90, label: "Balanced", color: COLORS.brand },
-  { from: 80.5, to: 85, label: "Strong", color: COLORS.s2 },
+  { from: 80.5, to: 87, label: "Strong", color: COLORS.s2 },
 ];
 
 function rateZoneLabel(v: number) {
   if (v >= 94.5) return { text: "Weak (94.5–100)", cls: "trig" };
   if (v >= 90) return { text: "RBI balanced (90–94.5)", cls: "watch" };
   if (v >= 87) return { text: "Balanced (87–90)", cls: "ok" };
-  if (v >= 85) return { text: "Balanced–Strong (85–87)", cls: "ok" };
-  return { text: "Strong (80.5–85)", cls: "ok" };
+  return { text: "Strong (80.5–87)", cls: "ok" };
 }
 
 export function LiveRupeePrice() {
@@ -39,9 +38,7 @@ export function LiveRupeePrice() {
   const option = useMemo<EOption>(() => {
     const t = (x: number) => (x - LO) / (HI - LO);
     const stops: [number, string][] = [
-      [t(80.5), COLORS.panel],
-      [t(85), COLORS.s2],
-      [t(87), COLORS.border2],
+      [t(87), COLORS.s2],
       [t(90), COLORS.brand],
       [t(94.5), COLORS.warn],
       [t(100), COLORS.neg],
