@@ -120,7 +120,7 @@ export function LiveMarketPulse() {
         <div className="p-3 flex flex-col justify-between">
           <div className="flex items-center justify-between gap-2 mb-1.5">
             <span className="kpi-l">USD/INR Reference</span>
-            <span className="tag text-10">ECB / Frank</span>
+            <span className="tag text-10">Live 30s</span>
           </div>
           <div className="kpi-v">
             ₹{usdinrFeed?.value ? num(usdinrFeed.value, 2) : "--"}

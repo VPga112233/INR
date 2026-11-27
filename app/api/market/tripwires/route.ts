@@ -31,9 +31,26 @@ async function fetchFredRecent(seriesId: string, apiKey: string, limit = 15): Pr
 }
 
 async function fetchUsdInrLatest(): Promise<{ value: number; date: string } | null> {
+  try {
+    const res = await fetch("https://query1.finance.yahoo.com/v8/finance/chart/USDINR=X?interval=1m&range=1d", {
+      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      headers: { "User-Agent": "Mozilla/5.0", accept: "application/json" },
+    });
+    if (res.ok) {
+      const json = (await res.json()) as { chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; regularMarketTime?: number } }> } };
+      const meta = json?.chart?.result?.[0]?.meta;
+      if (typeof meta?.regularMarketPrice === "number" && Number.isFinite(meta.regularMarketPrice)) {
+        const dt = new Date((meta.regularMarketTime ?? Date.now() / 1000) * 1000).toISOString().slice(0, 10);
+        return { value: meta.regularMarketPrice, date: dt };
+      }
+    }
+  } catch {
+    // fallback to Frankfurter
+  }
   for (const host of ["https://api.frankfurter.dev/v1", "https://api.frankfurter.app"]) {
     try {
-      const data = await fetchJson<FrankLatest>(`${host}/latest?base=USD&symbols=INR`);
+      const data = await fetchJson<FrankLatest>(`${host}/latest?base=USD&symbols=INR`, 0);
       if (Number.isFinite(data?.rates?.INR)) {
         return { value: data.rates.INR, date: data.date };
       }

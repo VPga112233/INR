@@ -53,7 +53,7 @@ export function RupeeSnapshot() {
     <Panel
       title="Rupee Snapshot"
       right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live" : "Snapshot"}</span>}
-      source={live ? "ECB reference rate (Frankfurter)" : "Market snapshot"}
+      source={live ? f.source : "Market snapshot"}
       stamp={`As of ${shortDate(live ? f.asOf : SNAPSHOT_DATE)}`}
     >
       <div className="flex items-end justify-between gap-3">

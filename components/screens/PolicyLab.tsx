@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { ArrowUpRight, RefreshCw } from "lucide-react";
-import { idealRupee, rbiActions, scorecard, SNAPSHOT_DATE } from "@/lib/data/deck";
+import { rbiActions, scorecard, SNAPSHOT_DATE } from "@/lib/data/deck";
 import { inr, num, shortDate, signed } from "@/lib/format";
 import { useLiveTripwires } from "@/lib/hooks";
 import { useStore } from "@/lib/store";
@@ -12,27 +12,40 @@ import { COLORS } from "@/components/charts/theme";
 import { Panel } from "@/components/ui/Panel";
 import { Tip } from "@/components/ui/Tip";
 
-const [LO, HI] = [75, 100];
-const ZONE_COLORS: Record<string, string> = { "Too weak": COLORS.neg, Risky: COLORS.warn, IDEAL: COLORS.brand, "Too strong": COLORS.s2 };
-const ZONE_NAMES: Record<string, string> = { "Too weak": "Weak", Risky: "Watch", IDEAL: "Balanced", "Too strong": "Strong" };
+const [LO, HI] = [80, 100];
+const RUPEE_BANDS = [
+  { from: 94.5, to: 100, label: "Weak", color: COLORS.neg },
+  { from: 90, to: 94.5, label: "RBI balanced", color: COLORS.warn },
+  { from: 87, to: 90, label: "Balanced", color: COLORS.brand },
+  { from: 80.5, to: 85, label: "Strong", color: COLORS.s2 },
+];
 
 function rateZoneLabel(v: number) {
-  if (v >= 94.3) return { text: "High depreciation zone", cls: "trig" };
-  if (v >= 88) return { text: "Elevated pressure zone", cls: "watch" };
-  if (v >= 85) return { text: "Balanced REER zone", cls: "ok" };
-  return { text: "Strong rupee zone", cls: "ok" };
+  if (v >= 94.5) return { text: "Weak (94.5–100)", cls: "trig" };
+  if (v >= 90) return { text: "RBI balanced (90–94.5)", cls: "watch" };
+  if (v >= 87) return { text: "Balanced (87–90)", cls: "ok" };
+  if (v >= 85) return { text: "Balanced–Strong (85–87)", cls: "ok" };
+  return { text: "Strong (80.5–85)", cls: "ok" };
 }
 
 export function LiveRupeePrice() {
   const f = useStore((s) => s.feeds.usdinr);
   const reer = useStore((s) => s.feeds.reer);
+  const lastRefresh = useStore((s) => s.telemetry.lastRefresh);
   const live = f.status !== "snapshot";
   const v = f.value;
   const zone = rateZoneLabel(v);
 
   const option = useMemo<EOption>(() => {
-    const zones = [...idealRupee.zones].sort((a, b) => a.to - b.to);
-    const stops = zones.map((z) => [(Math.max(z.from, z.to) - LO) / (HI - LO), ZONE_COLORS[z.label]] as [number, string]);
+    const t = (x: number) => (x - LO) / (HI - LO);
+    const stops: [number, string][] = [
+      [t(80.5), COLORS.panel],
+      [t(85), COLORS.s2],
+      [t(87), COLORS.border2],
+      [t(90), COLORS.brand],
+      [t(94.5), COLORS.warn],
+      [t(100), COLORS.neg],
+    ];
     return {
       series: [
         {
@@ -44,7 +57,7 @@ export function LiveRupeePrice() {
           max: HI,
           radius: "150%",
           center: ["50%", "94%"],
-          splitNumber: 5,
+          splitNumber: 4,
           axisLine: { lineStyle: { width: 12, color: stops } },
           pointer: { length: "64%", width: 3, itemStyle: { color: COLORS.text } },
           anchor: { show: true, size: 9, itemStyle: { color: COLORS.text, borderColor: COLORS.panel, borderWidth: 2 } },
@@ -52,20 +65,22 @@ export function LiveRupeePrice() {
           splitLine: { length: 12, distance: -12, lineStyle: { color: COLORS.panel, width: 2 } },
           axisLabel: { distance: 18, color: COLORS.text3, fontSize: 10, formatter: (x: number) => `₹${x}` },
           detail: { show: false },
-          data: [{ value: Math.min(HI, Math.max(LO, v)) }],
+          data: [{ value: Math.min(HI, Math.max(80.5, v)) }],
         },
       ],
     };
   }, [v]);
+
+  const stampTime = lastRefresh ? new Date(lastRefresh).toLocaleTimeString("en-GB", { timeZone: "Asia/Kolkata", hour12: false }) : null;
 
   return (
     <Panel
       className="col-span-12 lg:col-span-5 2xl:col-span-4"
       letter="a"
       title="Live rupee price"
-      right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live" : "Snapshot"}</span>}
-      source={live ? "ECB reference rate via Frankfurter" : "Market snapshot"}
-      stamp={`Spot ${inr(v)} · ${shortDate(live ? f.asOf : SNAPSHOT_DATE)}`}
+      right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live · 30s" : "Snapshot"}</span>}
+      source={f.source}
+      stamp={stampTime ? `Spot ${inr(v)} · ${stampTime} IST` : `Spot ${inr(v)} · ${shortDate(live ? f.asOf : SNAPSHOT_DATE)}`}
     >
       <div className="flex items-start justify-between gap-2">
         <div>
@@ -85,10 +100,10 @@ export function LiveRupeePrice() {
       </div>
       <EChart option={option} height={150} className="mt-2" />
       <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 mt-3 text-11">
-        {idealRupee.zones.map((z) => (
-          <span key={z.label + z.from} className="flex items-center gap-1.5 text-text-3">
-            <span className="w-2 h-2" style={{ background: ZONE_COLORS[z.label] }} />
-            {ZONE_NAMES[z.label] ?? z.label} <span className="mono">{z.from}–{z.to}</span>
+        {RUPEE_BANDS.map((z) => (
+          <span key={z.label} className="flex items-center gap-1.5 text-text-3">
+            <span className="w-2 h-2" style={{ background: z.color }} />
+            <span className="text-text-2">{z.label}</span> <span className="mono">{z.from}–{z.to}</span>
           </span>
         ))}
       </div>

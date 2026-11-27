@@ -49,12 +49,14 @@ export function useMonteCarlo(input: Omit<MCInput, "paths">): MCOutput | null {
   return out;
 }
 
-/** Fetch live feeds once per mount, plus every 15 minutes. */
+/** Fetch live feeds once per mount, refresh USD/INR every 30s, and macro feeds every 15 minutes. */
 export function useMarketFeeds() {
   const setFeeds = useStore((s) => s.setFeeds);
   useEffect(() => {
     let alive = true;
-    const load = async () => {
+    const STATIC = process.env.NEXT_PUBLIC_STATIC === "1";
+
+    const loadAll = async () => {
       const t0 = performance.now();
       const urls: [FeedId, string][] = [
         ["usdinr", "/api/market/usdinr"],
@@ -62,11 +64,15 @@ export function useMarketFeeds() {
         ["us10y", "/api/market/fred?series=DGS10"],
         ["usd", "/api/market/fred?series=DTWEXBGS"],
       ];
-      const STATIC = process.env.NEXT_PUBLIC_STATIC === "1";
       const results = await Promise.allSettled(
-        urls.map(([id, u]) => (STATIC ? (id === "usdinr" ? fetchUsdInrDirect() : Promise.reject(new Error("snapshot"))) : fetch(u).then((r) => r.json() as Promise<Feed>)))
+        urls.map(([id, u]) =>
+          STATIC
+            ? id === "usdinr"
+              ? fetchUsdInrDirect()
+              : Promise.reject(new Error("snapshot"))
+            : fetch(u, { cache: "no-store" }).then((r) => r.json() as Promise<Feed>)
+        )
       );
-      // Fetch India bundle separately
       const indiaResult = STATIC ? null : await fetch("/api/market/india").then((r) => r.json() as Promise<{ in10y: Feed; call: Feed; reer: Feed }>).catch(() => null);
       if (!alive) return;
       const next: Partial<Record<FeedId, Feed>> = {};
@@ -80,11 +86,27 @@ export function useMarketFeeds() {
       }
       setFeeds(next, { latencyMs: Math.round(performance.now() - t0), lastRefresh: new Date().toISOString(), loading: false });
     };
-    load();
-    const iv = setInterval(load, 15 * 60 * 1000);
+
+    const loadUsdInr = async () => {
+      const t0 = performance.now();
+      try {
+        const feed = STATIC
+          ? await fetchUsdInrDirect()
+          : ((await fetch("/api/market/usdinr", { cache: "no-store" }).then((r) => r.json())) as Feed);
+        if (!alive || !feed || typeof feed.value !== "number") return;
+        setFeeds({ usdinr: feed }, { latencyMs: Math.round(performance.now() - t0), lastRefresh: new Date().toISOString(), loading: false });
+      } catch {
+        // keep current USD/INR feed on transient network error
+      }
+    };
+
+    loadAll();
+    const macroIv = setInterval(loadAll, 15 * 60 * 1000);
+    const fxIv = setInterval(loadUsdInr, 30 * 1000);
     return () => {
       alive = false;
-      clearInterval(iv);
+      clearInterval(macroIv);
+      clearInterval(fxIv);
     };
   }, [setFeeds]);
 }

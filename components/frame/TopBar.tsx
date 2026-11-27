@@ -18,7 +18,7 @@ function StatusBadge() {
   const state = loading ? "loading" : live > 0 ? "live" : cached > 0 ? "cached" : "snapshot";
   const dot = state === "live" ? "bg-pos" : state === "cached" ? "bg-warn" : "bg-text-3";
   const label =
-    state === "loading" ? "CONNECTING" : state === "live" ? `LIVE ${live}/4` : state === "cached" ? "CACHED" : "SNAPSHOT";
+    state === "loading" ? "CONNECTING" : state === "live" ? `LIVE ${live}/${list.length}` : state === "cached" ? "CACHED" : "SNAPSHOT";
   return (
     <Tip
       content={

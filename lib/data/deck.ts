@@ -158,21 +158,7 @@ export const rbiActions: RbiAction[] = [
   },
 ];
 
-export const playbook = [
-  { p: 1, when: "Now · 0–3 months", who: "RBI", title: "Smooth, don't steer", what: "Cap sharp daily swings, not the level; hike only if core prices rise.", why: "Saves reserves for real shocks" },
-  { p: 2, when: "3–12 months", who: "RBI", title: "Exit emergency curbs", what: "Phase out FERR, the $5M limit and the NDF ban on a published timetable.", why: "Hedging costs hit 7.62%" },
-  { p: 3, when: "3–12 months", who: "Govt", title: "Fund the gap smartly", what: "Tax breaks for 2–3 year foreign investors; stick to the fiscal glide.", why: "$4B came back in one week" },
-  { p: 4, when: "1–3 years", who: "Govt + RBI", title: "Shrink the dollar bills", what: "Fill oil reserves, unlock household gold and grow trade invoiced in rupees.", why: "The only lasting fix to the gap" },
-];
 
-export const roadmap = [ // start/end in months from now
-  { pr: "P1", action: "Smooth swings, no ₹ target", owner: "RBI · ongoing", start: 0, end: 36, target: "Orderly ₹ market" },
-  { pr: "P1", action: "Publish usable reserves", owner: "RBI", start: 0, end: 3, target: "Monthly disclosure" },
-  { pr: "P2", action: "Exit emergency FX curbs", owner: "RBI · fixed timetable", start: 3, end: 12, target: "Premium below 5.6%" },
-  { pr: "P3", action: "Tax relief for long-stay FPIs", owner: "Govt · 2–3 year lock-in", start: 3, end: 18, target: "FPI stake above 15%" },
-  { pr: "P3", action: "Hold the fiscal glide path", owner: "Govt · lower borrowing", start: 6, end: 36, target: "Deficit below 4%" },
-  { pr: "P4", action: "Build oil stocks & ₹ trade", owner: "Govt + RBI · reserve Phase II", start: 6, end: 36, target: "22-day oil buffer" },
-];
 
 export const tripwires = [
   { name: "Oil shock returns", severity: "HIGH", watch: "Brent above $120 for two weeks", act: "Reopen oil-firm dollar window; draw oil stocks" },
@@ -181,12 +167,7 @@ export const tripwires = [
   { name: "Food-led stagflation", severity: "MEDIUM", watch: "CPI above 6%, led by food prices", act: "Supply steps first, not more rate hikes" },
 ];
 
-export const answer = [
-  { title: "₹100 ≠ Crisis", text: "An outside shock hit a sound economy: CAD is 0.6% of GDP, not 4.8% as in 2013" },
-  { title: "Pace is the risk", text: "Fast, messy falls lift prices and hit unhedged firms" },
-  { title: "Fix the flows", text: "Cut oil and gold bills and make foreign money stay longer" },
-];
-export const limits = ["Plan fails if the CAD tops 2.5% of GDP and outflows stay above $40B a year", "Reserve-use data are estimates", "Assumes oil settles below $110", "Fiscal fixes need State buy-in", "Political push to defend ₹100"];
+
 
 export const sources = [ // show in Sources screen; add URLs where known
   "RBI: BoP press release Q1 FY27; MPC October 2026 resolution; Annual Report 2025-26",
