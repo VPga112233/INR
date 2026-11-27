@@ -153,7 +153,7 @@ export function OutflowWaffle() {
 /* ───────────── Inflation dot plot ───────────── */
 export function InflationDots() {
   const o = useModel();
-  const rows: [string, number, string][] = [["Rural food", corporate.ruralFood, COLORS.neg], ...inflationSplit.map(([n, v]) => [n, v, n === "Food" ? COLORS.neg : COLORS.warn] as [string, number, string]), ["Headline CPI", 5.54, COLORS.text], ["Scenario CPI", +o.cpi.toFixed(2), COLORS.brandSoft]];
+  const rows: [string, number, string][] = [["Rural food", corporate.ruralFood, COLORS.neg], ...inflationSplit.map(([n, v]) => [n, v, n === "Food" ? COLORS.neg : COLORS.warn] as [string, number, string]), ["Headline CPI", corporate.cpi, COLORS.text], ["Scenario CPI", +o.cpi.toFixed(2), COLORS.brandSoft]];
   const option = useMemo<EOption>(() => ({
     grid: { left: 92, right: 40, top: 22, bottom: 24 },
     tooltip: { show: false },
@@ -170,7 +170,7 @@ export function InflationDots() {
     ],
   }), [rows]);
   return (
-    <Panel className="col-span-12 xl:col-span-4" letter="e" title="Who feels inflation · Sep 2026" right={<span className="tag">Scenario-linked</span>} source="MoSPI CPI Sep 2026" stamp="RBI band 2–6%">
+    <Panel className="col-span-12 xl:col-span-4" letter="e" title="Who feels inflation · Oct 2026" right={<span className="tag">Scenario-linked</span>} source="MoSPI CPI October 2026" stamp="RBI band 2–6%">
       <EChart option={option} height={230} />
       <p className="text-11 text-text-3 mt-2">Food and villages run hottest; cities sit inside the band. The pink dot moves with your scenario.</p>
     </Panel>
@@ -214,7 +214,7 @@ export function Vulnerability() {
   const base = useMemo(() => +runModel(DEFAULT_SCENARIO, coef).cover.toFixed(2), [coef]);
   const L: B[] = [
     { l: "Current account deficit, % GDP", v: 0.6, mark: { v: 4.8, l: "| 2013: 4.8%" }, min: 0, max: 5.5, bands: [0, 1.5, 2.5], upBad: true, unit: "%", d: 1, note: "Plan-failure line 2.5%" },
-    { l: "CPI inflation, %", v: 5.54, mark: { v: 4, l: "| target 4%" }, min: 2, max: 8, bands: [2, 4, 6], upBad: true, unit: "%", d: 2, note: "RBI band 2–6%" },
+    { l: "CPI inflation, %", v: corporate.cpi, mark: { v: 4, l: "| target 4%" }, min: 2, max: 8, bands: [2, 4, 6], upBad: true, unit: "%", d: 2, note: "RBI band 2–6%" },
     { l: "Import cover, months (usable)", v: base, min: 3, max: 10, bands: [3, 5, 6.5], upBad: false, unit: " mo", d: 2, note: "After the forward book" },
     { l: "Combined fiscal deficit, % GDP", v: headline.combinedFiscal, mark: { v: 4, l: "| goal < 4%" }, min: 0, max: 10, bands: [0, 4, 7], upBad: true, unit: "%", d: 1, note: "FY26" },
   ];
@@ -225,7 +225,7 @@ export function Vulnerability() {
     { l: "Foreign stake in Indian equities, %", v: 14.7, mark: { v: 15, l: "| goal > 15%" }, min: 10, max: 20, bands: [10, 13, 15], upBad: false, unit: "%", d: 1, note: "14-year low" },
   ];
   return (
-    <Panel className="col-span-12" letter="f" title="Vulnerability dashboard · how close to the line" right={<span className="flex items-center gap-3 text-11 text-text-3"><span className="flex items-center gap-1.5"><span className="w-4 h-1 bg-text-2" />Today</span></span>} source="Deck data; bands are team judgement except the RBI CPI band and the 2.5% plan-failure line" stamp="Bullet charts">
+    <Panel className="col-span-12" letter="f" title="Vulnerability dashboard · how close to the line" right={<span className="flex items-center gap-3 text-11 text-text-3"><span className="flex items-center gap-1.5"><span className="w-4 h-1 bg-text-2" />Today</span></span>} source="Market data; bands calibrated to RBI 2–6% target and CAD 2.5% threshold" stamp="Bullet charts">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8">
         <div>{L.map((b) => <Bullet key={b.l} b={b} />)}</div>
         <div>{R.map((b) => <Bullet key={b.l} b={b} />)}</div>

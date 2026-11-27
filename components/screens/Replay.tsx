@@ -17,8 +17,11 @@ const DETAIL: Record<string, { what: string; tone: "bad" | "good" | "neutral" }>
   "2026-10-07": { what: "The RBI hikes the repo rate to 5.50% to defend the rupee and anchor prices.", tone: "neutral" },
   "2026-10-22": { what: "RBI dollar sales drain the banks. Liquidity hits ~₹0 and the call rate touches 5.69%.", tone: "bad" },
   "2026-11-06": { what: "US midterms settle nerves: $4B of foreign money returns in a week. The rupee rebounds to ₹93.8.", tone: "good" },
+  "2026-11-12": { what: "MoSPI data shows October CPI surging to 6.09%, crossing the RBI's 6% ceiling for the first time in two years.", tone: "bad" },
+  "2026-11-20": { what: "RBI forex reserves fall to $700.9B (16-week low) as central bank steps in to calm currency swings.", tone: "neutral" },
+  "2026-11-25": { what: "Record ₹1.22L+ Cr ($15B) Nov FPI equity buying lifts sentiment, but domestic cash deficit swings to -₹47,641 Cr with Call rate touching 5.76%.", tone: "good" },
 };
-const LIQ_DATES = ["2026-02-27", "2026-03-23", "2026-09-07", "2026-10-22", "2026-11-06"];
+const LIQ_DATES = ["2026-02-27", "2026-03-23", "2026-09-07", "2026-10-22", "2026-11-06", "2026-11-20", "2026-11-25"];
 
 const interp = (pts: [string, number][], d: string) => {
   if (d <= pts[0][0]) return pts[0][1];

@@ -4,9 +4,9 @@
 export const SNAPSHOT_DATE = "2026-11-25";
 
 export const ticker = {
-  usdinr: 92.24, brent: 113.2, us10y: 5.2, in10y: 7.17, dollarIndex: 102,
-  repo: 5.50, sdf: 5.25, msf: 5.75, callRate: 5.69, reservesB: 734.6,
-  cpi: 5.54, wpi: 11.4, fwdPremium1M: 7.62, reer: 92.2, fedFunds: "3.75–4.00",
+  usdinr: 92.24, brent: 91.8, us10y: 4.91, in10y: 7.17, dollarIndex: 104.2,
+  repo: 5.50, sdf: 5.25, msf: 5.75, callRate: 5.76, reservesB: 700.9,
+  cpi: 6.09, wpi: 11.4, fwdPremium1M: 7.62, reer: 91.3, fedFunds: "3.75–4.00",
 };
 
 export type Anchor = { date: string; value: number; label?: string };
@@ -26,26 +26,31 @@ export const events = [
   { date: "2026-10-07", label: "RBI hike: repo 5.50%" },
   { date: "2026-10-22", label: "Bank liquidity ~₹0" },
   { date: "2026-11-06", label: "US midterms: $4B FPI inflow in a week" },
+  { date: "2026-11-12", label: "Oct CPI breaches 6% ceiling at 6.09%" },
+  { date: "2026-11-20", label: "Forex reserves at $700.9B (16-wk low)" },
+  { date: "2026-11-25", label: "Record ₹1.2L+ Cr Nov FPI inflow; Call spikes to 5.76%" },
 ];
 
 export const brent2026: Anchor[] = [
   { date: "2026-02-20", value: 72.9 }, { date: "2026-03-31", value: 118.4, label: "Peak" },
   { date: "2026-07-01", value: 71.6, label: "Ceasefire" }, { date: "2026-10-15", value: 113.2, label: "Re-escalation" },
+  { date: "2026-11-25", value: 91.8, label: "25 Nov anchor" },
 ];
 
 export const reservesWeekly: [string, number][] = [ // $B, week ending
   ["2026-02-20", 723.0], ["2026-02-27", 728.5], ["2026-03-27", 691.1], ["2026-05-01", 690.7],
-  ["2026-08-07", 707.0], ["2026-08-28", 740.8], ["2026-09-04", 785.7], ["2026-09-25", 747.6], ["2026-10-02", 734.6],
+  ["2026-08-07", 707.0], ["2026-08-28", 740.8], ["2026-09-04", 785.7], ["2026-09-25", 747.6],
+  ["2026-10-02", 734.6], ["2026-10-23", 721.4], ["2026-11-06", 712.1], ["2026-11-13", 705.3], ["2026-11-20", 700.9],
 ];
 
 export const fpiMonthly: [string, number][] = [ // $B net equity flow
   ["Apr", 1.2], ["May", -2.4], ["Jun", -1.8], ["Jul", 0.5], ["Aug", -3.1], ["Sep", -4.8],
-  ["Oct", -8.2], ["Nov", -4.5], ["Dec", -3.2], ["Jan", -2.1], ["Feb", -1.9],
+  ["Oct", -8.2], ["Nov", 14.8],
 ];
-export const fpiKpis = { outflowMonths: "7 of 10", marchRecord: "₹1.18L Cr", nov2to9Inflow: "₹53.7K Cr", in10y: "7.48% → 7.17%" };
+export const fpiKpis = { outflowMonths: "7 of 11", marchRecord: "₹1.18L Cr", nov2to9Inflow: "₹53.7K Cr", novTotalInflow: "₹1.22L+ Cr (All-time high)", in10y: "7.48% → 7.17%" };
 
 export const liquidity: [string, number][] = [ // ₹ lakh crore
-  ["Feb–Mar", 2.5], ["23 Mar", -0.7], ["7 Sep", 11.6], ["22 Oct", 0], ["6 Nov", 2.3],
+  ["Feb–Mar", 2.5], ["23 Mar", -0.7], ["7 Sep", 11.6], ["22 Oct", 0], ["6 Nov", 2.3], ["20 Nov", 0.4], ["25 Nov", -0.48],
 ];
 
 export const rbiDefence = { netSpotSalesFY26B: 53, forwardShortBookB: 103, grossSalesFY26B: 195, reserveDrainB: 51, rupeesPerBillionCr: 9400 };
@@ -72,13 +77,13 @@ export const headline = {
 
 export const corporate = {
   ecbTotalB: 255, ecbUnhedgedB: 87, unhedgedPct: 34, fwdPremiumPath: [5.58, 7.62], refinancingCliffB: 120, cliffDate: "2028-03-31",
-  techImportB: ">100", passThrough: "10% depreciation adds 30–40 bps to CPI", cpi: 5.54, ruralFood: 8.06,
-  liquidityChain: ["₹11.6L Cr surplus (7 Sep)", "FX & VRRR drain ~₹11L Cr in six weeks", "~₹0 (22 Oct)", "Call 5.69% vs 5.50% repo", "Rebuilt to ₹2.3L Cr (6 Nov)"],
-  fundingStress: ["5.69% call rate on 22 Oct, 6 bps below the 5.75% MSF", "Bank short-term funding costs up to 0.5% in one week", "₹2L Cr lent by RBI in one week", "₹3–4L Cr pulled out of banks by RBI dollar sales"],
-  cdRates: "+40–50 bps in a single week", surplusFall: "96% in six weeks",
+  techImportB: ">100", passThrough: "10% depreciation adds 30–40 bps to CPI", cpi: 6.09, ruralFood: 9.09,
+  liquidityChain: ["₹11.6L Cr surplus (7 Sep)", "FX & VRRR drain ~₹11L Cr in six weeks", "~₹0 (22 Oct)", "Rebuilt to ₹2.3L Cr (6 Nov)", "Deficit −₹47,641 Cr (25 Nov)", "Call touches 5.76% vs 5.75% MSF"],
+  fundingStress: ["5.76% call rate on 25 Nov, exceeding the 5.75% MSF", "System liquidity swings to ₹47,641 Cr deficit", "RBI rolls back daily CRR from 99% to 90% (27 Nov)", "Short-term CD rates +40–50 bps"],
+  cdRates: "+40–50 bps in November", surplusFall: "Swung to ₹47.6K Cr deficit",
 };
 
-export const inflationSplit: [string, number][] = [["Food", 7.74], ["Villages", 6.08], ["Cities", 4.88]]; // Sep 2026
+export const inflationSplit: [string, number][] = [["Food", 8.94], ["Villages", 6.63], ["Cities", 5.41]]; // Oct 2026 (released Nov 2026)
 
 export const idealRupee = {
   ideal: [85, 88], today: 94, reerEquilibrium: "98–100", gap: "8% (REER)",
@@ -162,7 +167,7 @@ export const rbiActions: RbiAction[] = [
 
 export const tripwires = [
   { name: "Oil shock returns", severity: "HIGH", watch: "Brent above $120 for two weeks", act: "Reopen oil-firm dollar window; draw oil stocks" },
-  { name: "Fed hikes again on 9 Dec", severity: "LIKELY", watch: "~78% odds; US 10-year back above 5%", act: "Follow only if core inflation keeps rising" },
+  { name: "Fed hikes again", severity: "LIKELY", watch: "US 10-year back above 5%", act: "Follow only if core inflation keeps rising" },
   { name: "Hidden forward book", severity: "HIGH", watch: "~$200B owed shrinks usable reserves", act: "Let forwards expire slowly; keep FCNR buffer" },
   { name: "Food-led stagflation", severity: "MEDIUM", watch: "CPI above 6%, led by food prices", act: "Supply steps first, not more rate hikes" },
 ];

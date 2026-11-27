@@ -13,17 +13,22 @@ import { Panel } from "@/components/ui/Panel";
 import { Tip } from "@/components/ui/Tip";
 
 const [LO, HI] = [80, 100];
+const COLOR_DARK_RED = "#B91C1C"; // dark red
+const COLOR_LESS_RED = "#EF4444"; // less red (coral/light red)
+const COLOR_YELLOW = "#F59E0B";   // yellow (amber)
+const COLOR_GREEN = "#10B981";    // green
+
 const RUPEE_BANDS = [
-  { from: 94.5, to: 100, label: "Weak", color: COLORS.neg },
-  { from: 90, to: 94.5, label: "RBI balanced", color: COLORS.warn },
-  { from: 87, to: 90, label: "Balanced", color: COLORS.brand },
-  { from: 80.5, to: 87, label: "Strong", color: COLORS.s2 },
+  { from: 94.5, to: 100, label: "Weak", color: COLOR_DARK_RED },
+  { from: 90, to: 94.5, label: "RBI balanced", color: COLOR_LESS_RED },
+  { from: 87, to: 90, label: "Balanced", color: COLOR_YELLOW },
+  { from: 80.5, to: 87, label: "Strong", color: COLOR_GREEN },
 ];
 
 function rateZoneLabel(v: number) {
   if (v >= 94.5) return { text: "Weak (94.5–100)", cls: "trig" };
-  if (v >= 90) return { text: "RBI balanced (90–94.5)", cls: "watch" };
-  if (v >= 87) return { text: "Balanced (87–90)", cls: "ok" };
+  if (v >= 90) return { text: "RBI balanced (90–94.5)", cls: "trig" };
+  if (v >= 87) return { text: "Balanced (87–90)", cls: "watch" };
   return { text: "Strong (80.5–87)", cls: "ok" };
 }
 
@@ -38,10 +43,10 @@ export function LiveRupeePrice() {
   const option = useMemo<EOption>(() => {
     const t = (x: number) => (x - LO) / (HI - LO);
     const stops: [number, string][] = [
-      [t(87), COLORS.s2],
-      [t(90), COLORS.brand],
-      [t(94.5), COLORS.warn],
-      [t(100), COLORS.neg],
+      [t(87), COLOR_GREEN],
+      [t(90), COLOR_YELLOW],
+      [t(94.5), COLOR_LESS_RED],
+      [t(100), COLOR_DARK_RED],
     ];
     return {
       series: [

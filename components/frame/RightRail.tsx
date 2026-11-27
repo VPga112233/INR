@@ -1,6 +1,6 @@
 "use client";
 import { Activity, AlertTriangle, BookLock, Droplets, Landmark, RefreshCw, ShoppingBasket, type LucideIcon } from "lucide-react";
-import { idealRupee, rupeeAnchors, SNAPSHOT_DATE } from "@/lib/data/deck";
+import { rupeeAnchors, SNAPSHOT_DATE } from "@/lib/data/deck";
 import { inr, num, shortDate, signed } from "@/lib/format";
 import { useLiveTripwires, useModel } from "@/lib/hooks";
 import { useStore } from "@/lib/store";
@@ -45,8 +45,6 @@ export function RupeeSnapshot() {
   const allFY = [...rupeeAnchors.map((a) => a.value), ...s.map((x) => x[1])];
   const loFY = Math.min(...allFY);
   const hiFY = Math.max(...allFY);
-  const [ilo, ihi] = idealRupee.ideal;
-  const gap = v - ihi;
   const up = (f.change ?? 0) > 0;
 
   return (
@@ -72,17 +70,6 @@ export function RupeeSnapshot() {
       <div className="mt-3 border-t border-border pt-1">
         <RangeBar label="52-week range" lo={lo52} hi={hi52} v={v} />
         <RangeBar label="Since FY26 start (Apr 2025)" lo={loFY} hi={hiFY} v={v} />
-        <RangeBar label="Ideal ₹85–88 on ₹80–100" lo={80} hi={100} v={v} ideal={[ilo, ihi]} />
-      </div>
-      <div className="mt-2 grid grid-cols-2 border border-border rounded-sm">
-        <div className="p-2.5 border-r border-border">
-          <div className="text-10 text-text-3 tracking-[0.06em]">GAP TO IDEAL CEILING</div>
-          <div className="mono text-16 text-text mt-0.5">{gap > 0 ? `${inr(gap)}` : "Inside zone"}</div>
-        </div>
-        <div className="p-2.5">
-          <div className="text-10 text-text-3 tracking-[0.06em]">AS % OF ₹88</div>
-          <div className="mono text-16 text-text mt-0.5">{gap > 0 ? `${num((gap / ihi) * 100, 1)}%` : "0.0%"}</div>
-        </div>
       </div>
     </Panel>
   );

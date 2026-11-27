@@ -250,21 +250,4 @@ export function LiquidityChain() {
   );
 }
 
-export function FundingCards() {
-  const big = ["5.69%", "+0.5%", "₹2L Cr", "₹3–4L Cr"];
-  const tone = ["c-neg", "c-warn", "c-warn", "c-neg"];
-  return (
-    <Panel className="col-span-12 xl:col-span-8" letter="f" title="Funding stress" source="ANI / ICICI; Rediff; BusinessLine" stamp="Oct 2026" flush>
-      <div className="grid grid-cols-2 gap-px bg-border">
-        {corporate.fundingStress.map((t, i) => (
-          <div key={i} className="p-3 bg-panel">
-            <div className={`mono text-28 ${tone[i]}`}>{big[i]}</div>
-            <div className="text-12 text-text-2 mt-1">{t}</div>
-          </div>
-        ))}
-      </div>
-    </Panel>
-  );
-}
-
 // the end

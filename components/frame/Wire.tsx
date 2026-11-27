@@ -105,30 +105,39 @@ export function WireToast() {
         >
           <div className="flex items-center gap-2 h-8 px-3 border-b border-border">
             <span className={`w-1.5 h-1.5 rounded-full ${item.tone === "bad" ? "bg-neg" : "bg-pos"} live-dot`} />
-            <span className="mono text-10 tracking-[0.1em] text-text-3">SIMULATED WIRE · {time(item.ts)} IST</span>
+            <span className="mono text-10 tracking-[0.1em] text-text-3 font-medium">LIVE FX ALERT · {time(item.ts)} IST</span>
+            {item.source && <span className="text-10 text-text-3 truncate hide-sm">· {item.source}</span>}
             <span className={`tag ml-auto ${item.severity === "HIGH" ? "trig" : item.severity === "MEDIUM" ? "watch" : "ok"}`}>{item.category}</span>
             <button className="reset" onClick={() => setToast(null)} aria-label="Dismiss">
               <X size={12} />
             </button>
           </div>
           <div className="p-3">
-            <div className="text-14 text-text leading-[1.35]">{item.headline}</div>
-            <div className="text-12 text-text-3 mt-1">{item.body}</div>
+            <div className="text-14 text-text leading-[1.35] font-medium">{item.headline}</div>
+            <div className="text-12 text-text-3 mt-1 leading-normal">{item.body}</div>
+
+            <div className="mt-2.5 p-2 rounded bg-panel-2 border border-border flex items-center justify-between text-11">
+              <span className="text-text-3">Estimated Rupee Impact:</span>
+              <span className={`mono font-semibold ${item.tone === "bad" ? "c-neg" : "c-pos"}`}>
+                {item.rupeeImpact || item.effect}
+              </span>
+            </div>
+
             <AnimatePresence mode="wait" initial={false}>
               {!item.applied ? (
                 <motion.div key="ask" exit={{ opacity: 0 }} transition={{ duration: 0.12 }} className="mt-3 flex items-center gap-2">
                   <span className="mono text-11 text-text-2 mr-auto">
-                    Model shock: <span className={item.tone === "bad" ? "c-neg" : "c-pos"}>{item.effect}</span>
+                    Global shock: <span className={item.tone === "bad" ? "c-neg" : "c-pos"}>{item.effect}</span>
                   </span>
-                  <button className="btn h-[26px]" onClick={() => setToast(null)}>Ignore</button>
+                  <button className="btn h-[26px]" onClick={() => setToast(null)}>Dismiss</button>
                   <button className="btn primary h-[26px]" onClick={() => applyNews(item)}>
-                    Apply shock
+                    Apply to Model
                   </button>
                 </motion.div>
               ) : (
                 <motion.div key="done" initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18 }} className="mt-3">
-                  <div className="flex items-center gap-1.5 text-11 c-pos mb-2">
-                    <Check size={12} /> Shock applied · {item.effect}
+                  <div className="flex items-center gap-1.5 text-11 c-pos mb-2 font-medium">
+                    <Check size={12} /> Shock applied · {item.rupeeImpact || item.effect}
                   </div>
                   {item.before && item.after && <ImpactRows b={item.before} a={item.after} />}
                   <div className="flex gap-2 mt-3">
@@ -156,13 +165,15 @@ export function WireFeed() {
   return (
     <div>
       <div className="flex items-center justify-between px-3 h-9 border-b border-border text-11">
-        <span className="text-text-3">{enabled ? "Headlines every 40–70 s" : "Wire paused"}</span>
+        <span className="text-text-3">{enabled ? "Live macro monitor active" : "Wire paused"}</span>
         <button className="btn h-[24px] text-11" onClick={fireNews}>
-          <Newspaper size={12} /> Fire headline
+          <Newspaper size={12} /> Fetch live alert
         </button>
       </div>
       {items.length === 0 ? (
-        <div className="px-3 py-6 text-12 text-text-3">No headlines yet. The first simulated story arrives within 15 seconds, or press “Fire headline”.</div>
+        <div className="px-3 py-6 text-12 text-text-3">
+          Monitoring live global market feeds (Crude, Treasuries, DXY, FPI, RBI)... Live alerts will appear as events unfold, or press “Fetch live alert”.
+        </div>
       ) : (
         <ul>
           <AnimatePresence initial={false}>
@@ -174,7 +185,11 @@ export function WireFeed() {
                     <span className={n.severity === "HIGH" ? "c-neg" : n.severity === "MEDIUM" ? "c-warn" : "c-pos"}>{n.category}</span>
                     <span className="ml-auto">{n.applied ? <span className="c-pos">APPLIED</span> : "OPEN"}</span>
                   </div>
-                  <div className="text-12 text-text-2 mt-0.5 leading-[1.35]">{n.headline}</div>
+                  <div className="text-12 text-text-2 mt-0.5 leading-[1.35] font-medium">{n.headline}</div>
+                  <div className="text-11 mt-1 mono flex items-center gap-1.5">
+                    <span className="text-text-3">INR Impact:</span>
+                    <span className={`font-semibold ${n.tone === "bad" ? "c-neg" : "c-pos"}`}>{n.rupeeImpact || n.effect}</span>
+                  </div>
                 </button>
               </motion.li>
             ))}

@@ -59,7 +59,9 @@ export function runModel(s: Scenario, c: Coefficients): ModelOutput {
   const cpi = Math.max(2, B.CPI0 + c.PASS_THROUGH * Math.max(dINR, 0) + c.FUEL_DIRECT_PER_10 * dBrent10 + s.food);
   const cad = Math.max(-0.5, B.CAD0 + c.CAD_PER_10 * dBrent10);
 
-  const reserves = B.RES0 - s.rbi * n;
+  // Extra crude oil import bill drains FX reserves via oil-PSU dollar window & CAD defence
+  const oilReserveDrain = Math.max(0, -oilQ * n * 0.4);
+  const reserves = B.RES0 - s.rbi * n - oilReserveDrain;
   const usable = reserves - s.book;
   const cover = usable / c.MONTHLY_IMPORTS;
   const liquidity = B.LIQ0 - c.LIQ_DRAIN_PER_1B * s.rbi * n;
@@ -89,7 +91,7 @@ export function runModel(s: Scenario, c: Coefficients): ModelOutput {
       key: "oil", name: "Oil shock", reading: `$${s.brent.toFixed(1)}`, threshold: "> $110 watch · > $120",
       status: s.brent > 120 ? "TRIGGERED" : s.brent > 110 ? "WATCH" : "OK",
     },
-    { key: "fed", name: "Fed hikes 9 Dec", reading: `${s.fed > 0 ? "+" : ""}${s.fed} bps`, threshold: "≥ +25 bps", status: s.fed >= 25 ? "TRIGGERED" : "OK" },
+    { key: "fed", name: "Fed hikes", reading: `${s.fed > 0 ? "+" : ""}${s.fed} bps`, threshold: "≥ +25 bps", status: s.fed >= 25 ? "TRIGGERED" : "OK" },
     {
       key: "book", name: "Forward book", reading: `$${usable.toFixed(0)}B usable`, threshold: "< $450B usable",
       status: usable < 450 ? "TRIGGERED" : s.book === 200 ? "WATCH" : "OK",

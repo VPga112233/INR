@@ -16,9 +16,11 @@ export function FanChart() {
   const horizon = useStore((s) => s.scenario.horizon);
   const vol = useStore((s) => s.coef.VOL_ANNUAL);
   const present = useStore((s) => s.present);
+  const liveUsdinr = useStore((s) => s.feeds.usdinr.value);
+  const startUsdinr = liveUsdinr && liveUsdinr > 70 ? liveUsdinr : B.USDINR0;
   const weeks = 13 * horizon;
   const volAnnual = vol * (o.crisis > 60 ? 1.5 : 1);
-  const mc = useMonteCarlo({ start: B.USDINR0, end: o.usdinr, weeks, volAnnual });
+  const mc = useMonteCarlo({ start: startUsdinr, end: o.usdinr, weeks, volAnnual });
   const setMc = useStore((s) => s.setMc);
   useEffect(() => {
     if (mc) setMc(mc, volAnnual);
@@ -66,15 +68,8 @@ export function FanChart() {
             silent: true,
             symbol: "none",
             data: [
-              { yAxis: 100, lineStyle: { color: COLORS.neg, type: [4, 4], width: 1 }, label: { formatter: "₹100 — psychological, not a cliff", position: "insideEndTop", color: COLORS.neg, fontSize: 11 } },
-              { yAxis: B.USDINR0, lineStyle: { color: COLORS.text3, type: [2, 3], width: 1 }, label: { formatter: `Today ₹${num(B.USDINR0)}`, position: "insideStartTop", color: COLORS.text3, fontSize: 11 } },
+              { yAxis: startUsdinr, lineStyle: { color: COLORS.text3, type: [2, 3], width: 1 }, label: { formatter: `Spot ₹${num(startUsdinr)}`, position: "insideStartTop", color: COLORS.text3, fontSize: 11 } },
             ],
-          },
-          markArea: {
-            silent: true,
-            itemStyle: { color: alpha(COLORS.brand, 0.22) },
-            label: { color: COLORS.brandSoft, fontSize: 11, position: "insideLeft" },
-            data: [[{ yAxis: 85, name: "Ideal zone ₹85–88" }, { yAxis: 88 }]],
           },
         },
         {
