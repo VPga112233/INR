@@ -36,7 +36,7 @@ function EventLegend({ from }: { from?: string }) {
 export function KpiRow() {
   const items = [
     { l: "Record low", v: `₹${num(headline.recordLow)}`, s: headline.recordLowWhen, tone: "neg" },
-    { l: "Merchandise gap", v: usdB(headline.tradeGapB), s: "FY26", tone: "neg" },
+    { l: "Trade deficit", v: usdB(headline.tradeGapB), s: "FY26", tone: "neg" },
     { l: "Combined fiscal deficit", v: `${num(headline.combinedFiscal, 1)}%`, s: "of GDP, FY26", tone: "warn" },
     { l: "Current account", v: `${num(headline.cadPctGDP, 1)}%`, s: "of GDP vs 4.8% in 2013", tone: "pos" },
     { l: "US–India spread", v: `${headline.spreadBps} bps`, s: "10Y, did not stop outflows", tone: "flat" },

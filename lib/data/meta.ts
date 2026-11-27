@@ -48,7 +48,7 @@ export const dataCatalogue: DataPoint[] = [
   { label: "1M forward premium", value: ticker.fwdPremium1M.toFixed(2), unit: "% ann.", date: "Oct 2026", source: "Moody's via TradingView: forward premiums" },
   { label: "Forward premium before curbs", value: corporate.fwdPremiumPath[0].toFixed(2), unit: "% ann.", date: "2026", source: "Moody's via TradingView: forward premiums" },
   { label: "Current account deficit", value: headline.cadPctGDP.toFixed(1), unit: "% of GDP", date: "Q1 FY27", source: "RBI: BoP press release Q1 FY27" },
-  { label: "Merchandise trade gap", value: headline.tradeGapB.toFixed(1), unit: "$B", date: "FY26", source: "Finnovate: FY26 trade data" },
+  { label: "Trade deficit", value: headline.tradeGapB.toFixed(1), unit: "$B", date: "FY26", source: "Finnovate: FY26 trade data" },
   { label: "Combined fiscal deficit", value: headline.combinedFiscal.toFixed(1), unit: "% of GDP", date: "FY26", source: "Livemint: Union Budget 2026-27" },
   { label: "Net capital outflow", value: headline.netCapitalOutflowQ1B.toFixed(1), unit: "$B", date: "Q1 FY27", source: "RBI: BoP press release Q1 FY27" },
   { label: "Balance of payments", value: headline.bopB.toFixed(2), unit: "$B", date: "Q1 FY27", source: "RBI: BoP press release Q1 FY27" },
