@@ -1,5 +1,5 @@
 import { PageHeader, SectionLabel } from "@/components/ui/PageHeader";
-import { ImportTreemap, InflationDots, OutflowWaffle, RupeeCalculator, TwinPath, Vulnerability } from "@/components/screens/Macro";
+import { ImportTreemap, InflationDots, OutflowWaffle, RupeeCalculator, TwinPath } from "@/components/screens/Macro";
 
 export default function MacroPulse() {
   return (
@@ -12,8 +12,6 @@ export default function MacroPulse() {
         <ImportTreemap />
         <OutflowWaffle />
         <InflationDots />
-        <SectionLabel n="03" title="Distance to danger" desc="Today" />
-        <Vulnerability />
       </div>
     </div>
   );
