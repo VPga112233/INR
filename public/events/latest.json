@@ -1,5 +1,8 @@
 {
+  "fetchedAt": "2026-11-27T11:51:21.488Z",
   "fed": 3.88,
-  "asOf": "2026-10-01",
-  "fetchedAt": "2026-11-26T19:59:04.880Z"
+  "fedAsOf": "2026-10-01",
+  "brent": 91.8,
+  "brentAsOf": "2026-11-24",
+  "brentSource": "Alpha Vantage"
 }
