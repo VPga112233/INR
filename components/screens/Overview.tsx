@@ -38,8 +38,8 @@ export function KpiRow() {
     { l: "Record low", v: `₹${num(headline.recordLow)}`, s: headline.recordLowWhen, tone: "neg" },
     { l: "Trade deficit", v: usdB(headline.tradeGapB), s: "FY26", tone: "neg" },
     { l: "Combined fiscal deficit", v: `${num(headline.combinedFiscal, 1)}%`, s: "of GDP, FY26", tone: "warn" },
-    { l: "Current account", v: `${num(headline.cadPctGDP, 1)}%`, s: "of GDP vs 4.8% in 2013", tone: "pos" },
-    { l: "US–India spread", v: `${headline.spreadBps} bps`, s: "10Y, did not stop outflows", tone: "flat" },
+    { l: "Current Account Deficit", v: `${num(headline.cadPctGDP, 1)}%`, s: "of GDP vs 4.8% in 2013", tone: "pos" },
+    { l: "Ind-US bond rate spread", v: `${headline.spreadBps} bps`, s: "10Y, did not stop outflows", tone: "flat" },
     { l: "REER", v: num(ticker.reer, 1), s: "40-currency, Sep 2026", tone: "flat" },
   ];
   return (
