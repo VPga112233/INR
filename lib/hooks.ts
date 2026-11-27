@@ -49,7 +49,7 @@ export function useMonteCarlo(input: Omit<MCInput, "paths">): MCOutput | null {
   return out;
 }
 
-/** Fetch live feeds once per mount, refresh USD/INR every 30s, and macro feeds every 15 minutes. */
+/** Fetch live feeds once per mount, refresh USD/INR every 10s, and macro feeds every 15 minutes. */
 export function useMarketFeeds() {
   const setFeeds = useStore((s) => s.setFeeds);
   useEffect(() => {
@@ -102,7 +102,7 @@ export function useMarketFeeds() {
 
     loadAll();
     const macroIv = setInterval(loadAll, 15 * 60 * 1000);
-    const fxIv = setInterval(loadUsdInr, 30 * 1000);
+    const fxIv = setInterval(loadUsdInr, 10 * 1000);
     return () => {
       alive = false;
       clearInterval(macroIv);

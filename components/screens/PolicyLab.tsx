@@ -75,7 +75,7 @@ export function LiveRupeePrice() {
       className="col-span-12 lg:col-span-5 2xl:col-span-4"
       letter="a"
       title="Live rupee price"
-      right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live · 30s" : "Snapshot"}</span>}
+      right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live · 10s" : "Snapshot"}</span>}
       source={f.source}
       stamp={stampTime ? `Spot ${inr(v)} · ${stampTime} IST` : `Spot ${inr(v)} · ${shortDate(live ? f.asOf : SNAPSHOT_DATE)}`}
     >
