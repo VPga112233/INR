@@ -22,9 +22,9 @@ export function WhatThisMeans() {
 
   let s3: string;
   const pos = o.callRate >= o.msf - 0.02 ? "pushing the call rate to the MSF ceiling" : o.callRate > o.repo ? `lifting the call rate to ${pct(o.callRate)}, above repo` : `leaving the call rate at ${pct(o.callRate)}, inside the corridor`;
-  if (s.rbi > 0) s3 = `RBI sales of ${usdB(s.rbi * n, 0)} drain ~${lakhCr(B.LIQ0 - o.liquidity, 1)} of bank liquidity, ${pos}. Usable reserves fall to ${usdB(o.usable, 0)} (${num(o.cover, 1)} months of imports).`;
+  if (s.rbi > 0) s3 = `RBI sales of ${usdB(s.rbi * n, 0)} drain ~${lakhCr(B.LIQ0 - o.liquidity, 1)} of bank liquidity, ${pos}. FX reserves fall to ${usdB(o.reserves, 0)} (${num(o.cover, 1)} months of imports).`;
   else if (s.rbi < 0) s3 = `RBI buying ${usdB(-s.rbi * n, 0)} rebuilds reserves to ${usdB(o.reserves, 0)} and adds ~${lakhCr(o.liquidity - B.LIQ0, 1)} of liquidity, ${pos}.`;
-  else s3 = `With no RBI dollar sales, liquidity stays at ${lakhCr(o.liquidity, 1)} and usable reserves hold at ${usdB(o.usable, 0)} (${num(o.cover, 1)} months of imports).`;
+  else s3 = `With no RBI dollar sales, liquidity stays at ${lakhCr(o.liquidity, 1)} and FX reserves hold at ${usdB(o.reserves, 0)} (${num(o.cover, 1)} months of imports).`;
 
   const band = meterBand(o.crisis);
   return (

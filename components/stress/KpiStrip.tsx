@@ -8,17 +8,16 @@ import { Num } from "@/components/ui/Num";
 import { Spark } from "@/components/ui/Spark";
 import { COLORS } from "@/components/charts/theme";
 
-type K = { label: string; unit: string; base: number; value: number; d: number; up: "bad" | "good"; hist: number[]; prefix?: string };
+type K = { label: string; unit: string; base: number; value: number; d: number; up: "bad" | "good"; hist: number[]; prefix?: string; sub?: string };
 
 export function KpiStrip() {
   const o = useModel();
   const book = useStore((s) => s.scenario.book);
-  const baseUsable = B.RES0 - book;
   const kpis: K[] = [
     { label: "USD/INR", unit: "", prefix: "₹", base: B.USDINR0, value: o.usdinr, d: 2, up: "bad", hist: rupeeAnchors.map((a) => a.value) },
     { label: "CPI inflation", unit: "%", base: B.CPI0, value: o.cpi, d: 2, up: "bad", hist: [B.CPI0] },
     { label: "CAD, % of GDP", unit: "%", base: B.CAD0, value: o.cad, d: 2, up: "bad", hist: [0.6] },
-    { label: "Usable reserves", unit: "$B", base: baseUsable, value: o.usable, d: 1, up: "good", hist: reservesWeekly.map((r) => r[1] - book) },
+    { label: "FX reserves", unit: "$B", base: B.RES0, value: o.reserves, d: 1, up: "good", hist: reservesWeekly.map((r) => r[1]), sub: `Usable $${num(o.usable, 0)}B` },
     { label: "Bank liquidity", unit: "₹L Cr", base: B.LIQ0, value: o.liquidity, d: 2, up: "good", hist: liquidity.map((l) => l[1]) },
     { label: "Call rate", unit: "%", base: B.ACTUAL_CALL, value: o.callRate, d: 2, up: "bad", hist: [B.ACTUAL_CALL] },
   ];
@@ -43,7 +42,7 @@ export function KpiStrip() {
               <div className="flex items-center gap-2 text-11">
                 <span className={`delta ${tone}`}>{signed(delta, k.d)}</span>
                 <span className="text-text-3 truncate">
-                  {k.label === "Call rate" ? `vs ${num(B.ACTUAL_CALL, 2)}% actual` : `Base ${k.prefix ?? ""}${num(k.base, k.d)}`}
+                  {k.sub ? `${k.sub}` : k.label === "Call rate" ? `vs ${num(B.ACTUAL_CALL, 2)}% actual` : `Base ${k.prefix ?? ""}${num(k.base, k.d)}`}
                 </span>
               </div>
             </div>
