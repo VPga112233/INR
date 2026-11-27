@@ -14,7 +14,7 @@ import { Panel } from "@/components/ui/Panel";
 import { Tabs } from "@/components/ui/Controls";
 
 export const PCOL: Record<PresetId, string> = {
-  base: "#A3A3AD", oil130: COLORS.warn, fed25: COLORS.s2, book200: "#4FB0B8", stagflation: "#D98B5F", defend90: COLORS.neg, plan: COLORS.pos,
+  base: "#A3A3AD", oil130: COLORS.warn, fed25: COLORS.s2, book200: "#4FB0B8", stagflation: "#D98B5F",
 };
 const short = (id: PresetId) => presetById(id)!.label.replace(" · 25 Nov 2026", "");
 

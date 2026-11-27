@@ -77,7 +77,7 @@ export const useStore = create<State>((set, get) => ({
     set({ wire: { ...get().wire, items: get().wire.items.map((x) => (x.id === id ? { ...x, applied: true, before, after } : x)) } }),
   setToast: (id) => set({ wire: { ...get().wire, toast: id } }),
   setWire: (v) => set({ wire: { ...get().wire, enabled: v } }),
-  compare: ["base", "oil130", "defend90", "plan"],
+  compare: ["base", "oil130", "fed25", "stagflation"],
   toggleCompare: (id) => {
     const c = get().compare;
     set({ compare: c.includes(id) ? c.filter((x) => x !== id) : [...c, id].slice(-4) });

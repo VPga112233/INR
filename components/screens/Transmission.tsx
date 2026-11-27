@@ -229,7 +229,7 @@ export function DollarSankey() {
           <div className="flex gap-2 mt-1">
             <button className="btn" onClick={() => applyPreset("oil130")}>Oil shock</button>
             <button className="btn" onClick={() => applyPreset("fed25")}>Fed hike</button>
-            <button className="btn primary" onClick={() => applyPreset("plan")}>Our plan</button>
+            <button className="btn primary" onClick={() => applyPreset("stagflation")}>Stagflation</button>
           </div>
         </div>
       ) : (

@@ -17,7 +17,7 @@ export function WhatThisMeans() {
   const s1 = `Over ${hz}, the rupee ${move} ${inr(o.usdinr)} per dollar (${o.dINR >= 0 ? "+" : "−"}${num(Math.abs(o.dINR))}% vs ${inr(B.USDINR0)})${mc ? `, with a ${pct(mc.pCross * 100, 0)} chance of touching ₹100` : ""}.`;
 
   const cadVerb = o.cad > B.CAD0 + 0.05 ? "widens to" : o.cad < B.CAD0 - 0.05 ? "narrows to" : "stays at";
-  const flows = o.annualisedOutflow > 0 ? ` Net capital outflows run at ~${usdB(o.annualisedOutflow, 0)} a year${o.annualisedOutflow > 40 ? ", above the $40B line where our plan fails" : ""}.` : " Capital flows are net positive, so the market absorbs the oil bill.";
+  const flows = o.annualisedOutflow > 0 ? ` Net capital outflows run at ~${usdB(o.annualisedOutflow, 0)} a year${o.annualisedOutflow > 40 ? ", above the $40B threshold" : ""}.` : " Capital flows are net positive, so the market absorbs the oil bill.";
   const s2 = `At Brent $${num(s.brent, 1)} the current account ${cadVerb} ~${num(o.cad, 1)}% of GDP.${flows}`;
 
   let s3: string;

@@ -62,7 +62,7 @@ export function CommandPalette() {
     >
       <Command.Input value={q} onValueChange={setQ} placeholder="GO STRESS · PRESET OIL130 · SET BRENT 125 · PRESENT" />
       <Command.List>
-        <Command.Empty>No matching command. Try SET BRENT 125 or PRESET PLAN.</Command.Empty>
+        <Command.Empty>No matching command. Try SET BRENT 125 or PRESET OIL130.</Command.Empty>
         {set && (
           <Command.Group heading="Set parameter">
             <Command.Item value={`set ${set.key}`} onSelect={() => run(() => { setParam(set.key, set.value as never); router.push("/"); })}>
