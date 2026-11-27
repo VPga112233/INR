@@ -12,7 +12,7 @@ export default function MacroPulse() {
         <ImportTreemap />
         <OutflowWaffle />
         <InflationDots />
-        <SectionLabel n="03" title="Distance to danger" desc="Today versus your scenario" />
+        <SectionLabel n="03" title="Distance to danger" desc="Today" />
         <Vulnerability />
       </div>
     </div>
