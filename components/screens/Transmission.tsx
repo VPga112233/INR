@@ -127,7 +127,7 @@ export function CausalNetwork() {
       title="Cause and effect · live network"
       model
       right={<span className="mono text-11 text-text-3 flex items-center gap-1.5"><MousePointerClick size={12} /> Click any node</span>}
-      source="Team model: each arrow is an equation in the Stress Engine"
+      source="Each arrow is an equation in the Stress Engine"
       stamp={live ? `${live} shock${live > 1 ? "s" : ""} travelling` : "At baseline: move a lever"}
       flush
     >
@@ -154,7 +154,7 @@ export function NodeInspector() {
   const outs = EDGES.filter(([a]) => a === n.id).map(([, b]) => byId[b]);
   const c = toneColor(k.tone);
   return (
-    <Panel className="col-span-12 xl:col-span-4" letter="b" title="Node inspector" source="Team model" stamp="vs base scenario, same horizon">
+    <Panel className="col-span-12 xl:col-span-4" letter="b" title="Node inspector" source="Stress Engine model" stamp="vs base scenario, same horizon">
       <div className="mono text-10 tracking-[0.1em] text-text-3">{n.kind === "in" ? "INPUT" : n.kind === "mid" ? "CHANNEL" : "OUTCOME"}</div>
       <div className="text-20 text-text mt-0.5">{n.label}</div>
       <div className="flex items-baseline gap-3 mt-3">
@@ -221,7 +221,7 @@ export function DollarSankey() {
     };
   }, [ins, outs]);
   return (
-    <Panel className="col-span-12 xl:col-span-6" letter="c" title={<>Where the dollars go · {h === 1 ? "1 quarter" : "4 quarters"}</>} model source="Team model: dollar supply and demand over the horizon" stamp="$B">
+    <Panel className="col-span-12 xl:col-span-6" letter="c" title={<>Where the dollars go · {h === 1 ? "1 quarter" : "4 quarters"}</>} model source="Dollar supply and demand over the horizon" stamp="$B">
       {empty ? (
         <div className="h-[280px] flex flex-col items-center justify-center text-center gap-3">
           <div className="text-14 text-text-2">No net dollar pressure at the baseline.</div>

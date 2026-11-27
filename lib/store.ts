@@ -54,7 +54,7 @@ export const useStore = create<State>((set, get) => ({
   coef: { ...DEFAULT_COEFFICIENTS },
   present: false,
   paletteOpen: false,
-  feeds: { usdinr: snapshotFeed("usdinr"), brent: snapshotFeed("brent"), us10y: snapshotFeed("us10y"), usd: snapshotFeed("usd") },
+  feeds: { usdinr: snapshotFeed("usdinr"), brent: snapshotFeed("brent"), us10y: snapshotFeed("us10y"), usd: snapshotFeed("usd"), in10y: snapshotFeed("in10y"), call: snapshotFeed("call"), reer: snapshotFeed("reer") },
   telemetry: { latencyMs: null, lastRefresh: null, loading: true },
   mc: null,
   mcVol: 6,

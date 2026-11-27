@@ -1,5 +1,5 @@
 export type FeedStatus = "live" | "cached" | "snapshot";
-export type FeedId = "usdinr" | "brent" | "us10y" | "usd";
+export type FeedId = "usdinr" | "brent" | "us10y" | "usd" | "in10y" | "call" | "reer";
 
 export type Feed = {
   id: FeedId;

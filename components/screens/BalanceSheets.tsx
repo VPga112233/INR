@@ -121,7 +121,7 @@ export function RefinancingCliff() {
   const quarters = ["Q1 FY27", "Q2", "Q3", "Q4", "Q1 FY28", "Q2", "Q3", "Q4"];
   const extra = (corporate.refinancingCliffB * 1e9 * (o.usdinr - B.USDINR0)) / 1e7;
   return (
-    <Panel className="col-span-12 lg:col-span-12 xl:col-span-4" letter="c" title="Refinancing cliff" model source="Team deck: $120B due by Mar 2028" stamp={shortDate(corporate.cliffDate)}>
+    <Panel className="col-span-12 lg:col-span-12 xl:col-span-4" letter="c" title="Refinancing cliff" model source="$120B due by Mar 2028" stamp={shortDate(corporate.cliffDate)}>
       <div className="flex items-baseline justify-between">
         <div>
           <div className="mono text-28 text-text">${corporate.refinancingCliffB}B</div>
@@ -167,9 +167,9 @@ export function SectorHeatmap() {
       className="col-span-12 xl:col-span-8"
       letter="d"
       title="Sector exposure heatmap"
-      right={<><span className="tag">Team assessment 1–5</span><span className="tag">Re-tints with scenario</span></>}
+      right={<><span className="tag">Exposure scores 1–5</span><span className="tag">Re-tints with scenario</span></>}
       flush
-      source="Team assessment; scenario impact = net exposure × rupee move"
+      source="Scenario impact = net exposure × rupee move"
       stamp={`Rupee move ${signed(d)}%`}
     >
       <table className="tbl">

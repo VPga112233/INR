@@ -71,7 +71,7 @@ export function RupeeChart() {
       title={<>USD/INR · <strong>{live ? "daily ECB reference rate" : "anchor points, not daily data"}</strong></>}
       right={live ? <Tabs options={[...TF]} value={tf} onChange={setTf} /> : <span className="tag">Snapshot</span>}
       flush
-      source={live ? "ECB reference rates via Frankfurter" : "Team deck anchor points"}
+      source={live ? "ECB reference rates via Frankfurter" : "Anchor points"}
       stamp={`As of ${shortDate(f.asOf)}`}
     >
       <div className="px-1 pt-2">
@@ -94,7 +94,7 @@ export function BrentChart() {
       title={<>Brent 2026 · <strong>{live ? "daily" : "anchor points"}</strong></>}
       right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live" : "Snapshot"}</span>}
       flush
-      source={live ? "FRED · DCOILBRENTEU" : "Team deck"}
+      source={live ? "FRED · DCOILBRENTEU" : "Market snapshot"}
       stamp={`$/bbl · ${shortDate(f.asOf)}`}
     >
       <div className="px-1 pt-2">

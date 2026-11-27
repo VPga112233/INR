@@ -18,7 +18,7 @@ export function DataTable() {
       .map((d) => {
         if (d.value !== "Live") return d;
         const f = d.label.includes("USD/INR") ? feeds.usdinr : d.label.includes("Brent") ? feeds.brent : d.label.includes("10-year") ? feeds.us10y : feeds.usd;
-        return f.status === "snapshot" ? { ...d, value: "Not connected", date: "Using deck snapshot" } : { ...d, value: num(f.value, 2), date: f.asOf };
+        return f.status === "snapshot" ? { ...d, value: "Not connected", date: "Using snapshot" } : { ...d, value: num(f.value, 2), date: f.asOf };
       })
       .filter((d) => !t || `${d.label} ${d.source} ${d.value}`.toLowerCase().includes(t));
   }, [q, feeds]);
@@ -34,7 +34,7 @@ export function DataTable() {
         </label>
       }
       flush
-      source="Team deck and live feeds"
+      source="Data sources"
       stamp={`${rows.length} of ${dataCatalogue.length} rows`}
     >
       <div className="max-h-[calc(100vh-230px)] overflow-auto">
@@ -141,7 +141,7 @@ export function CoefTable() {
 
 export function Methodology() {
   return (
-    <Panel className="col-span-12 2xl:col-span-7" letter="c" title="Methodology" source="Team model v1.0" stamp="Illustrative, not a forecast">
+    <Panel className="col-span-12 2xl:col-span-7" letter="c" title="Methodology" source="Stress Engine v1.0" stamp="Illustrative, not a forecast">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 text-12 text-text-2 leading-[1.55]">
         <div>
           <div className="text-11 tracking-[0.08em] text-text-3 mb-1">WHAT IT DOES</div>
@@ -149,7 +149,7 @@ export function Methodology() {
         </div>
         <div>
           <div className="text-11 tracking-[0.08em] text-text-3 mb-1">WHAT IT IGNORES</div>
-          Second-round effects such as wage spirals, growth feedback on imports, fiscal responses, the exact timing of forward maturities and market panic beyond the volatility boost above a Crisis Meter of 60. Corporate sector scores are qualitative team assessments.
+          Second-round effects such as wage spirals, growth feedback on imports, fiscal responses, the exact timing of forward maturities and market panic beyond the volatility boost above a Crisis Meter of 60. Corporate sector scores are qualitative assessments.
         </div>
         <div>
           <div className="text-11 tracking-[0.08em] text-text-3 mb-1">WHY IT IS ILLUSTRATIVE</div>
@@ -162,7 +162,7 @@ export function Methodology() {
 
 export function SourceList() {
   return (
-    <Panel className="col-span-12 2xl:col-span-5" letter="d" title="Source list" flush source="Team deck bibliography" stamp={`${sources.length} sources`}>
+    <Panel className="col-span-12 2xl:col-span-5" letter="d" title="Source list" flush source="Bibliography" stamp={`${sources.length} sources`}>
       <ol className="grid grid-cols-1 2xl:grid-cols-2 text-11">
         {sources.map((s, i) => (
           <li key={s} className="flex gap-2 px-3 py-1.5 border-b border-border text-text-2">

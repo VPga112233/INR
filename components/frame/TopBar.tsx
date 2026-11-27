@@ -18,7 +18,7 @@ function StatusBadge() {
   const state = loading ? "loading" : live > 0 ? "live" : cached > 0 ? "cached" : "snapshot";
   const dot = state === "live" ? "bg-pos" : state === "cached" ? "bg-warn" : "bg-text-3";
   const label =
-    state === "loading" ? "CONNECTING" : state === "live" ? `LIVE ${live}/4` : state === "cached" ? "CACHED" : `DECK SNAPSHOT ${shortDate(SNAPSHOT_DATE).toUpperCase()}`;
+    state === "loading" ? "CONNECTING" : state === "live" ? `LIVE ${live}/4` : state === "cached" ? "CACHED" : "SNAPSHOT";
   return (
     <Tip
       content={
@@ -32,7 +32,7 @@ function StatusBadge() {
             </div>
           ))}
           <div className="mt-1.5 pt-1.5 border-t border-border text-11 text-text-3">
-            Stress Engine always uses the deck baseline of {shortDate(SNAPSHOT_DATE)}. Repo, CPI, reserves, REER and flows come from the deck snapshot.
+            Stress Engine always uses the deck baseline of {shortDate(SNAPSHOT_DATE)}. Some values are from the last available snapshot.
           </div>
         </div>
       }
@@ -91,8 +91,6 @@ export function TopBar() {
       <div className="flex items-center gap-3 min-w-0 shrink-0">
         <span className="w-2 h-4 bg-brand" aria-hidden />
         <span className="mono text-13 font-medium tracking-[0.06em] text-text">INR STRESS TERMINAL</span>
-        <span className="w-px h-4 bg-border-2 hide-sm" />
-        <span className="text-11 text-text-3 tracking-[0.04em] hide-sm whitespace-nowrap">THE BLACK SWANS · MacroMinds 3.0</span>
       </div>
 
       <button onClick={() => setPalette(true)} className="mx-auto flex items-center gap-2 h-[28px] w-full min-w-0 max-w-[420px] px-2.5 border border-border rounded-sm bg-panel text-text-3 text-12 hover:border-border-2 transition-colors duration-150 hide-sm">

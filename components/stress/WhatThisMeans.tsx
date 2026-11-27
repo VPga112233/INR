@@ -28,7 +28,7 @@ export function WhatThisMeans() {
 
   const band = meterBand(o.crisis);
   return (
-    <Panel className="a-what" letter="i" title="What this means" right={<span className={`tag ${band.cls}`}>{band.label}</span>} source="Generated from templates on model outputs, not an AI model" stamp="Model estimate">
+    <Panel className="a-what" letter="i" title="What this means" right={<span className={`tag ${band.cls}`}>{band.label}</span>} source="Model estimate" stamp="">
       <ol className="flex flex-col gap-2.5">
         {[s1, s2, s3].map((t, i) => (
           <li key={i} className="grid grid-cols-[18px_1fr] gap-2 text-13 leading-[1.5] text-text-2">

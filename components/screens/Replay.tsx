@@ -158,10 +158,10 @@ export function Replay() {
           </div>
         </div>
       </section>
-      <Panel className="col-span-12 xl:col-span-8" letter="a" title={<>USD/INR · 2026 · <strong>{live ? "daily ECB reference rate" : "interpolated between deck anchor points"}</strong></>} right={<span className={`mono text-12 ${fr.inr > startInr ? "c-neg" : "c-pos"}`}>{signed(((fr.inr / startInr) - 1) * 100, 1)}% YTD</span>} source={live ? "ECB reference rates via Frankfurter" : "Team deck anchor points"} stamp="Numbers mark events" flush>
+      <Panel className="col-span-12 xl:col-span-8" letter="a" title={<>USD/INR · 2026 · <strong>{live ? "daily ECB reference rate" : "interpolated between anchor points"}</strong></>} right={<span className={`mono text-12 ${fr.inr > startInr ? "c-neg" : "c-pos"}`}>{signed(((fr.inr / startInr) - 1) * 100, 1)}% YTD</span>} source={live ? "ECB reference rates via Frankfurter" : "Anchor points"} stamp="Numbers mark events" flush>
         <div className="px-1 pt-1"><EChart option={main} height={330} /></div>
       </Panel>
-      <Panel className="col-span-12 xl:col-span-4" letter="b" title="Event tape" right={<span className="mono text-11 text-text-3">{passed.length} / {events.length}</span>} source="Team deck timeline" stamp="Newest first" flush>
+      <Panel className="col-span-12 xl:col-span-4" letter="b" title="Event tape" right={<span className="mono text-11 text-text-3">{passed.length} / {events.length}</span>} source="Event timeline" stamp="Newest first" flush>
         <ul className="max-h-[362px] overflow-y-auto">
           <AnimatePresence initial={false}>
             {[...passed].reverse().map((e) => {
@@ -183,10 +183,10 @@ export function Replay() {
           {passed.length === 0 && <li className="px-3 py-6 text-12 text-text-3">Press Play. Events appear here as the year unfolds.</li>}
         </ul>
       </Panel>
-      <Panel className="col-span-12 xl:col-span-5" letter="c" title="Oil versus rupee · the trajectory" source="Team deck anchors; weekly samples" stamp="Connected scatter">
+      <Panel className="col-span-12 xl:col-span-5" letter="c" title="Oil versus rupee · the trajectory" source="Weekly samples" stamp="Connected scatter">
         <EChart option={scatter} height={250} />
       </Panel>
-      <Panel className="col-span-12 xl:col-span-7" letter="d" title="The other gauges, in sync" source="Team deck data points; linear between them" stamp={shortDate(fr.d)} flush>
+      <Panel className="col-span-12 xl:col-span-7" letter="d" title="The other gauges, in sync" source="Linear interpolation between data points" stamp={shortDate(fr.d)} flush>
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
           {[
             { l: "Brent crude", v: `$${num(fr.brent, 1)}`, s: "Oil-shock tripwire $120", c: fr.brent > 110 ? "c-neg" : "text-text" },

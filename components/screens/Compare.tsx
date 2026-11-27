@@ -106,7 +106,7 @@ export function PathChart() {
     };
   }, [compare, coef, scen, m]);
   return (
-    <Panel className="col-span-12 lg:col-span-7" letter="b" title="Four-quarter paths" model right={<Tabs options={Object.keys(PM) as (keyof typeof PM)[]} value={tab} onChange={setTab} />} source="Team model, scenario held for four quarters" stamp="Deterministic path">
+    <Panel className="col-span-12 lg:col-span-7" letter="b" title="Four-quarter paths" model right={<Tabs options={Object.keys(PM) as (keyof typeof PM)[]} value={tab} onChange={setTab} />} source="Scenario held for four quarters" stamp="Deterministic path">
       <EChart option={option} height={300} />
     </Panel>
   );
@@ -135,7 +135,7 @@ export function CompareTable() {
     return Math.max(0, Math.min(1, t));
   };
   return (
-    <Panel className="col-span-12" letter="c" title={<>All seven scenarios · {h === 1 ? "1 quarter" : "4 quarters"}</>} model flush source="Team model; cell shading = severity" stamp="Click a row to compare · ▶ to load">
+    <Panel className="col-span-12" letter="c" title={<>All seven scenarios · {h === 1 ? "1 quarter" : "4 quarters"}</>} model flush source="Cell shading = severity" stamp="Click a row to compare · ▶ to load">
       <div className="overflow-x-auto">
         <table className="tbl w-full">
           <thead>

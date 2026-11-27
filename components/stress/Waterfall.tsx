@@ -59,7 +59,7 @@ export function Waterfall({ className = "a-wf" }: { className?: string } = {}) {
 
   const weaker = o.dINR > 0;
   return (
-    <Panel className={className} letter="g" title={<>Transmission · {h === 1 ? "1 quarter" : "4 quarters"}</>} model source="Team model: flows → rupee → CPI" stamp="$B over horizon">
+    <Panel className={className} letter="g" title={<>Transmission · {h === 1 ? "1 quarter" : "4 quarters"}</>} model source="Flows → rupee → CPI" stamp="$B over horizon">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 items-stretch">
         <EChart option={option} height={196} />
         <div className="flex flex-col justify-center gap-2 w-[138px]">

@@ -102,9 +102,61 @@ export const scorecard = { // 0–3 per criterion: Calms the ₹, Saves dollars,
     { name: "FX curbs & controls", s: [2,3,2,1,2], total: 10, cost: "Hedging costs jumped to 7.62%" },
     { name: "Gold import curbs", s: [1,2,2,1,1], total: 7, cost: "Smuggling rose 35% after past hikes" },
     { name: "Free float", s: [1,3,3,1,3], total: 11, cost: "Prices up; unhedged firms hurt" },
-    { name: "Our blend", s: [3,2,3,2,2], total: 12, cost: "Needs RBI–Govt discipline", ours: true },
-  ] as { name: string; s: number[]; total: number; cost: string; ours?: boolean }[],
+  ] as { name: string; s: number[]; total: number; cost: string }[],
 };
+
+export type RbiAction = {
+  action: string;
+  tool: string;
+  mechanism: string;
+  scale: string;
+  tradeoff: string;
+};
+
+export const rbiActions: RbiAction[] = [
+  {
+    action: "Spot dollar sales & smoothing",
+    tool: "FX Intervention",
+    mechanism: "PSU banks sell dollars into volatility spikes to absorb excess demand and slow sharp daily USD/INR jumps.",
+    scale: "$53B net / $195B gross FY26 sales",
+    tradeoff: "Drains ~₹9,400 Cr banking liquidity per $1B sold",
+  },
+  {
+    action: "Short forward book & NDF intervention",
+    tool: "Forwards",
+    mechanism: "Caps near-term spot reserve drain by settling dollar sales forward while defending key psychological rupee levels.",
+    scale: "$103B reported (~$200B est.)",
+    tradeoff: "Reduces usable reserves as forward maturities roll due",
+  },
+  {
+    action: "NOP caps, NDF ban & $5M curbs",
+    tool: "FX Controls",
+    mechanism: "Restricts bank Net Open Positions (NOP), offshore NDF arbitrage, and discretionary intraday dollar buying (FERR).",
+    scale: "Active since Oct 2026",
+    tradeoff: "Pushed 1M forward hedging premium up to 7.62%",
+  },
+  {
+    action: "Repo hold at 5.50% & VRRR drain",
+    tool: "Rates & Liquidity",
+    mechanism: "Keeps call rate tight near 5.69%–5.75% MSF ceiling via VRRR and FX drain, raising rupee carry cost against FX shorts.",
+    scale: "Repo 5.50% · SDF 5.25% · MSF 5.75%",
+    tradeoff: "Tighter domestic funding pushes short-term CD rates +40–50 bps",
+  },
+  {
+    action: "FCNR(B) & Buy/Sell USD-INR swaps",
+    tool: "Swaps & Inflows",
+    mechanism: "Attracts foreign-currency NRI deposits and injects rupee liquidity against temporary dollar inflows.",
+    scale: "Swap window active",
+    tradeoff: "Creates future dollar repayment obligations at maturity",
+  },
+  {
+    action: "Oil-PSU dollar window & rupee trade",
+    tool: "Flow Routing",
+    mechanism: "Routes lumpy PSU crude-oil importer dollar demand off the spot screen and promotes INR-invoiced bilateral trade.",
+    scale: "Q1 oil bill $60.6B · 88% crude reliance",
+    tradeoff: "Requires sustained FX buffer and exporter/importer adoption",
+  },
+];
 
 export const playbook = [
   { p: 1, when: "Now · 0–3 months", who: "RBI", title: "Smooth, don't steer", what: "Cap sharp daily swings, not the level; hike only if core prices rise.", why: "Saves reserves for real shocks" },

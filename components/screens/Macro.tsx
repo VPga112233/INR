@@ -31,7 +31,7 @@ export function RupeeCalculator() {
     { l: "Annual gold bill", v: `₹${num(gold, 2)}L Cr`, s: `${signed(gold - gold0, 2)}L Cr vs today`, bad: gold > gold0 + 0.001, good: gold < gold0 - 0.001 },
   ];
   return (
-    <Panel className="col-span-12 xl:col-span-6" letter="a" title="Rupee calculator · what a level means" right={<button className="btn h-[22px] text-11" onClick={() => setRate(+o.usdinr.toFixed(1))}>Use scenario {inr(o.usdinr, 1)}</button>} source="Deck: Q1 oil bill $60.6B, gold $72B, $87B unhedged ECBs; CPI pass-through" stamp="vs ₹93.80 today">
+    <Panel className="col-span-12 xl:col-span-6" letter="a" title="Rupee calculator · what a level means" right={<button className="btn h-[22px] text-11" onClick={() => setRate(+o.usdinr.toFixed(1))}>Use scenario {inr(o.usdinr, 1)}</button>} source="Q1 oil bill $60.6B, gold $72B, $87B unhedged ECBs; CPI pass-through" stamp="vs ₹93.80 today">
       <div className="flex items-end justify-between gap-4">
         <div>
           <div className="text-11 text-text-3">Drag the rupee</div>
@@ -170,7 +170,7 @@ export function InflationDots() {
     ],
   }), [rows]);
   return (
-    <Panel className="col-span-12 xl:col-span-4" letter="e" title="Who feels inflation · Sep 2026" right={<span className="tag">Scenario-linked</span>} source="MoSPI CPI Sep 2026; team model" stamp="RBI band 2–6%">
+    <Panel className="col-span-12 xl:col-span-4" letter="e" title="Who feels inflation · Sep 2026" right={<span className="tag">Scenario-linked</span>} source="MoSPI CPI Sep 2026" stamp="RBI band 2–6%">
       <EChart option={option} height={230} />
       <p className="text-11 text-text-3 mt-2">Food and villages run hottest; cities sit inside the band. The pink dot moves with your scenario.</p>
     </Panel>

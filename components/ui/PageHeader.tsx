@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function PageHeader({ index, group, title, desc, right }: { index: string; group: string; title: string; desc: string; right?: ReactNode }) {
+export function PageHeader({ index, group, title, desc, right }: { index: string; group: string; title: string; desc?: string; right?: ReactNode }) {
   return (
     <header className="page-h">
       <div className="min-w-0">
@@ -9,7 +9,7 @@ export function PageHeader({ index, group, title, desc, right }: { index: string
           {group} <span className="text-text-3">/</span> {index}
         </div>
         <h1 className="page-title">{title}</h1>
-        <p className="page-d">{desc}</p>
+        {desc && <p className="page-d">{desc}</p>}
       </div>
       {right && <div className="flex items-center gap-2 shrink-0">{right}</div>}
     </header>

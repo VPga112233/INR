@@ -11,7 +11,7 @@ export const NAV: { href: string; label: string; icon: LucideIcon; group: Group;
   { href: "/macro", label: "Macro Pulse", icon: Globe, group: "MARKETS", cmd: "MACRO", desc: "Twin deficits and vulnerability" },
   { href: "/replay", label: "2026 Replay", icon: History, group: "MARKETS", cmd: "REPLAY", desc: "Replay the year, event by event" },
   { href: "/balance-sheets", label: "Balance Sheets", icon: Building2, group: "POLICY", cmd: "BALANCE", desc: "Corporate FX and bank funding" },
-  { href: "/policy", label: "Policy Lab", icon: Scale, group: "POLICY", cmd: "POLICY", desc: "Ideal rupee, scorecard, roadmap" },
+  { href: "/policy", label: "RBI policies", icon: Scale, group: "POLICY", cmd: "POLICY", desc: "Live rupee, RBI actions, scorecard, tripwires" },
   { href: "/sources", label: "Sources & Assumptions", icon: BookOpen, group: "REFERENCE", cmd: "SOURCES", desc: "Data, coefficients, method" },
 ];
 // the end

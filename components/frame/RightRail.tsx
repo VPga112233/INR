@@ -1,8 +1,8 @@
 "use client";
-import { AlertTriangle, BookLock, Droplets, Landmark, ShoppingBasket, type LucideIcon } from "lucide-react";
+import { Activity, AlertTriangle, BookLock, Droplets, Landmark, RefreshCw, ShoppingBasket, type LucideIcon } from "lucide-react";
 import { idealRupee, rupeeAnchors, SNAPSHOT_DATE } from "@/lib/data/deck";
 import { inr, num, shortDate, signed } from "@/lib/format";
-import { useModel } from "@/lib/hooks";
+import { useLiveTripwires, useModel } from "@/lib/hooks";
 import { useStore } from "@/lib/store";
 import { Panel } from "@/components/ui/Panel";
 import { Spark } from "@/components/ui/Spark";
@@ -53,7 +53,7 @@ export function RupeeSnapshot() {
     <Panel
       title="Rupee Snapshot"
       right={<span className={`tag ${live ? "ok" : ""}`}>{live ? "Live" : "Snapshot"}</span>}
-      source={live ? "ECB reference rate (Frankfurter)" : "Team deck"}
+      source={live ? "ECB reference rate (Frankfurter)" : "Market snapshot"}
       stamp={`As of ${shortDate(live ? f.asOf : SNAPSHOT_DATE)}`}
     >
       <div className="flex items-end justify-between gap-3">
@@ -88,36 +88,90 @@ export function RupeeSnapshot() {
   );
 }
 
-const ICONS: Record<string, LucideIcon> = { oil: Droplets, fed: Landmark, book: BookLock, cpi: ShoppingBasket, plan: AlertTriangle };
+const ICONS: Record<string, LucideIcon> = {
+  oil: Droplets,
+  fed: Landmark,
+  spread: Activity,
+  liquidity: BookLock,
+  book: BookLock,
+  cpi: ShoppingBasket,
+  plan: AlertTriangle,
+};
 const cls = (s: TripStatus) => (s === "TRIGGERED" ? "trig" : s === "WATCH" ? "watch" : "ok");
 
 export function TripwireList({ bare }: { bare?: boolean }) {
   const o = useModel();
-  const n = o.trips.filter((t) => t.status !== "OK").length;
+  const [mode, setMode] = useState<"live" | "scenario">("live");
+  const { items: liveItems, loading, refresh } = useLiveTripwires();
+
+  const rows =
+    mode === "live"
+      ? liveItems.map((t) => ({
+          key: t.key,
+          name: t.name,
+          reading: t.reading,
+          threshold: t.watch,
+          status: t.status,
+        }))
+      : o.trips;
+
+  const n = rows.filter((t) => t.status !== "OK").length;
   const list = (
+    <>
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-border bg-panel-2">
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => setMode("live")}
+            className={`chip h-[20px] px-1.5 mono text-10`}
+            data-active={mode === "live"}
+          >
+            LIVE
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("scenario")}
+            className={`chip h-[20px] px-1.5 mono text-10`}
+            data-active={mode === "scenario"}
+          >
+            SCENARIO
+          </button>
+        </div>
+        {mode === "live" && (
+          <button type="button" onClick={refresh} disabled={loading} className="btn h-[20px] px-1.5 mono text-10">
+            <RefreshCw size={10} className={loading ? "animate-spin" : ""} />
+            {loading ? "..." : "SYNC"}
+          </button>
+        )}
+      </div>
       <ul>
-        {o.trips.map((t) => {
-          const Icon = ICONS[t.key];
-          return (
-            <li key={t.key} className="flex items-center gap-3 px-3 h-[52px] border-b border-border last:border-b-0">
-              <span className="w-7 h-7 shrink-0 rounded-sm border border-border-2 bg-panel-2 flex items-center justify-center text-text-2">
-                <Icon size={14} strokeWidth={1.5} />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="text-12 text-text truncate">{t.name}</div>
-                <div className="text-11 text-text-3 truncate">
-                  <span className="mono text-text-2">{t.reading}</span> · {t.threshold}
+        {mode === "live" && rows.length === 0 && loading ? (
+          <li className="px-3 py-4 text-center mono text-11 text-text-3">Fetching live tripwires...</li>
+        ) : (
+          rows.map((t) => {
+            const Icon = ICONS[t.key] ?? AlertTriangle;
+            return (
+              <li key={t.key} className="flex items-center gap-3 px-3 h-[52px] border-b border-border last:border-b-0">
+                <span className="w-7 h-7 shrink-0 rounded-sm border border-border-2 bg-panel-2 flex items-center justify-center text-text-2">
+                  <Icon size={14} strokeWidth={1.5} />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="text-12 text-text truncate">{t.name}</div>
+                  <div className="text-11 text-text-3 truncate">
+                    <span className="mono text-text-2">{t.reading}</span> · {t.threshold}
+                  </div>
                 </div>
-              </div>
-              <span className={`tag ${cls(t.status)}`}>{t.status}</span>
-            </li>
-          );
-        })}
+                <span className={`tag ${cls(t.status)}`}>{t.status}</span>
+              </li>
+            );
+          })
+        )}
       </ul>
+    </>
   );
   if (bare) return list;
   return (
-    <Panel title="Tripwires" right={<span className="mono text-11 text-text-3">{n} active</span>} source="Deck risk register, scenario-linked" stamp="Model estimate" flush>
+    <Panel title="Tripwires" right={<span className="mono text-11 text-text-3">{n} active</span>} source={mode === "live" ? "Live feeds: ECB & FRED" : "Risk register, scenario-linked"} stamp={mode === "live" ? "Live" : "Model estimate"} flush>
       {list}
     </Panel>
   );

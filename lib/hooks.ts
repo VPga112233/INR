@@ -1,10 +1,11 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { runModel, type ModelOutput } from "./model/model";
 import { simulate, type MCInput, type MCOutput } from "./model/montecarlo";
 import { useStore } from "./store";
 import type { Feed, FeedId } from "./market/types";
 import { fetchUsdInrDirect } from "./market/client";
+import type { LiveTripwireItem } from "@/app/api/market/tripwires/route";
 
 export function useModel(): ModelOutput {
   const scenario = useStore((s) => s.scenario);
@@ -65,11 +66,18 @@ export function useMarketFeeds() {
       const results = await Promise.allSettled(
         urls.map(([id, u]) => (STATIC ? (id === "usdinr" ? fetchUsdInrDirect() : Promise.reject(new Error("snapshot"))) : fetch(u).then((r) => r.json() as Promise<Feed>)))
       );
+      // Fetch India bundle separately
+      const indiaResult = STATIC ? null : await fetch("/api/market/india").then((r) => r.json() as Promise<{ in10y: Feed; call: Feed; reer: Feed }>).catch(() => null);
       if (!alive) return;
       const next: Partial<Record<FeedId, Feed>> = {};
       results.forEach((r, i) => {
         if (r.status === "fulfilled" && r.value && typeof r.value.value === "number") next[urls[i][0]] = r.value;
       });
+      if (indiaResult) {
+        if (indiaResult.in10y && typeof indiaResult.in10y.value === "number") next["in10y"] = indiaResult.in10y;
+        if (indiaResult.call && typeof indiaResult.call.value === "number") next["call"] = indiaResult.call;
+        if (indiaResult.reer && typeof indiaResult.reer.value === "number") next["reer"] = indiaResult.reer;
+      }
       setFeeds(next, { latencyMs: Math.round(performance.now() - t0), lastRefresh: new Date().toISOString(), loading: false });
     };
     load();
@@ -79,6 +87,39 @@ export function useMarketFeeds() {
       clearInterval(iv);
     };
   }, [setFeeds]);
+}
+
+/** Fetch live tripwire readings on mount, every 5 minutes, and on demand. */
+export function useLiveTripwires() {
+  const [items, setItems] = useState<LiveTripwireItem[]>([]);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/market/tripwires", { cache: "no-store" });
+      if (res.ok) {
+        const json = (await res.json()) as { ok?: boolean; fetchedAt?: string; items?: LiveTripwireItem[] };
+        if (json.ok && Array.isArray(json.items)) {
+          setItems(json.items);
+          setFetchedAt(json.fetchedAt ?? new Date().toISOString());
+        }
+      }
+    } catch {
+      // keep existing items on transient failure
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    refresh();
+    const iv = setInterval(refresh, 5 * 60 * 1000);
+    return () => clearInterval(iv);
+  }, [refresh]);
+
+  return { items, fetchedAt, loading, refresh };
 }
 
 export function useNow(intervalMs = 1000) {

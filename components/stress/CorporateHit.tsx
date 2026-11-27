@@ -17,7 +17,7 @@ export function CorporateHit({ className = "a-corp" }: { className?: string } = 
   const loss = o.ecbLossCr;
   const curbsPrem = B.FWDPREM_NO_CURBS + B.CURBS_PREMIUM_ADD;
   return (
-    <Panel className={className} letter="h" title="Corporate hit" model source="Deck: $255B ECBs, 34% unhedged; refinancing $120B" stamp={`Cliff ${shortDate(corporate.cliffDate)}`}>
+    <Panel className={className} letter="h" title="Corporate hit" model source="$255B ECBs, 34% unhedged; refinancing $120B" stamp={`Cliff ${shortDate(corporate.cliffDate)}`}>
       <div className="grid grid-cols-2 border border-border rounded-sm">
         <div className="p-3 border-r border-border">
           <div className="text-10 text-text-3 tracking-[0.06em]">ECB TRANSLATION {loss < 0 ? "GAIN" : "LOSS"}</div>

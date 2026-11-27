@@ -1,6 +1,4 @@
 "use client";
-import { fpiKpis, reservesWeekly, ticker } from "@/lib/data/deck";
-import { corporate } from "@/lib/data/deck";
 import { num, signed } from "@/lib/format";
 import { useStore } from "@/lib/store";
 import { Spark } from "@/components/ui/Spark";
@@ -18,19 +16,14 @@ const fromFeed = (f: Feed, k: string, label: string, d: number, up: Item["up"], 
 
 export function Ticker() {
   const feeds = useStore((s) => s.feeds);
-  const in10 = fpiKpis.in10y.match(/[\d.]+/g)!.map(Number);
   const items: Item[] = [
     fromFeed(feeds.usdinr, "usdinr", "USD/INR", 2, "bad"),
     fromFeed(feeds.brent, "brent", "BRENT", 1, "bad", "$"),
     fromFeed(feeds.us10y, "us10y", "US 10Y", 2, "bad"),
-    { k: "in10y", label: "IN 10Y", value: ticker.in10y, d: 2, change: in10[1] - in10[0], series: in10, live: false, up: "bad", note: "ANI / ICICI (10 Nov)", asOf: "2026-11-10" },
+    fromFeed(feeds.in10y, "in10y", "IN 10Y", 2, "bad"),
     fromFeed(feeds.usd, "usd", feeds.usd.status === "snapshot" ? "DOLLAR IDX" : "BROAD USD", feeds.usd.status === "snapshot" ? 0 : 2, "bad"),
-    { k: "repo", label: "REPO", value: ticker.repo, d: 2, change: 0.25, series: [5.25, 5.5], live: false, up: "neutral", note: "RBI MPC, 7 Oct 2026", asOf: "2026-10-07" },
-    { k: "call", label: "CALL", value: ticker.callRate, d: 2, change: null, series: [], live: false, up: "bad", note: "22 Oct 2026, 6 bps below MSF", asOf: "2026-10-22" },
-    { k: "res", label: "FX RES $B", value: ticker.reservesB, d: 1, change: reservesWeekly.at(-1)![1] - reservesWeekly.at(-2)![1], series: reservesWeekly.map((r) => r[1]), live: false, up: "good", note: "RBI weekly", asOf: "2026-10-02" },
-    { k: "cpi", label: "CPI", value: ticker.cpi, d: 2, unit: "", change: null, series: [], live: false, up: "bad", note: "PIB / MoSPI, Sep 2026", asOf: "2026-09-30" },
-    { k: "fwd", label: "1M FWD", value: ticker.fwdPremium1M, d: 2, change: corporate.fwdPremiumPath[1] - corporate.fwdPremiumPath[0], series: corporate.fwdPremiumPath, live: false, up: "bad", note: "Forward premium, % annualised", asOf: "2026-10-31" },
-    { k: "reer", label: "REER", value: ticker.reer, d: 1, change: null, series: [], live: false, up: "neutral", note: "RBI 40-currency REER, Sep 2026", asOf: "2026-09-30" },
+    fromFeed(feeds.call, "call", "CALL", 2, "bad"),
+    fromFeed(feeds.reer, "reer", "REER", 1, "neutral"),
   ];
   return (
     <div className="tape" role="marquee" aria-label="Market ticker">
@@ -40,7 +33,7 @@ export function Ticker() {
         const tone = ch === null || Math.abs(ch) < 1e-9 || it.up === "neutral" ? "flat" : (ch > 0) === (it.up === "good") ? "pos" : "neg";
         const col = tone === "pos" ? COLORS.pos : tone === "neg" ? COLORS.neg : COLORS.text3;
         return (
-          <Tip key={`${it.k}-${idx}`} content={<><div className="text-text">{it.label}</div><div>{it.note}</div><div className="mono text-text-3">As of {it.asOf} · {it.live ? "Live feed" : "Deck snapshot"}</div></>}>
+          <Tip key={`${it.k}-${idx}`} content={<><div className="text-text">{it.label}</div><div>{it.note}</div><div className="mono text-text-3">As of {it.asOf} · {it.live ? "Live feed" : "Snapshot"}</div></>}>
             <div className="tape-item">
               <span className={`src-tag ${it.live ? "live" : ""}`}>{it.live ? "L" : "S"}</span>
               <span className="text-text-3 text-11 tracking-[0.04em]">{it.label}</span>
