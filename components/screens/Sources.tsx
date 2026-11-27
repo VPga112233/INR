@@ -123,7 +123,7 @@ export function CoefTable() {
                       <span className="whitespace-nowrap">{m.unit}</span>
                     </div>
                   </td>
-                  <td><span className={`tag ${m.tag === "Team assumption" ? "" : "ok"}`}>{m.tag}</span></td>
+                  <td><span className="tag ok">{m.tag}</span></td>
                   <td className="w-8">
                     <button className="reset" disabled={!dirty} onClick={() => resetCoef(m.key)} aria-label={`Reset ${m.label}`}>
                       <RotateCcw size={12} strokeWidth={1.5} />
