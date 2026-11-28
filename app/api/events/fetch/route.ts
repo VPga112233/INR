@@ -20,10 +20,11 @@ export async function GET(): Promise<NextResponse> {
   };
 
   // 1. Fetch Fed Funds Rate from FRED (Macro / Interest Rates)
+  // Try DFF (Daily Federal Funds Effective Rate) first for daily freshness; fallback to FEDFUNDS (monthly)
   if (fredKey && fredKey !== "YOUR_FRED_API_KEY") {
     try {
-      const fedUrl = `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${encodeURIComponent(fredKey)}&observation_start=2024-01-01&file_type=json`;
-      const fedRes = await fetch(fedUrl, { cache: "no-store", signal: AbortSignal.timeout(10000) });
+      const dailyFedUrl = `https://api.stlouisfed.org/fred/series/observations?series_id=DFF&api_key=${encodeURIComponent(fredKey)}&observation_start=2024-01-01&file_type=json`;
+      const fedRes = await fetch(dailyFedUrl, { cache: "no-store", signal: AbortSignal.timeout(10000) });
       if (fedRes.ok) {
         const fedJson = await fedRes.json();
         const observations = Array.isArray(fedJson?.observations) ? fedJson.observations : [];
@@ -31,6 +32,21 @@ export async function GET(): Promise<NextResponse> {
         if (latest) {
           result.fed = Number(latest.value);
           result.fedAsOf = latest.date ?? null;
+        }
+      }
+      
+      // Fallback to monthly FEDFUNDS if daily returned nothing
+      if (!result.fed) {
+        const fedUrl = `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${encodeURIComponent(fredKey)}&observation_start=2024-01-01&file_type=json`;
+        const mRes = await fetch(fedUrl, { cache: "no-store", signal: AbortSignal.timeout(10000) });
+        if (mRes.ok) {
+          const mJson = await mRes.json();
+          const observations = Array.isArray(mJson?.observations) ? mJson.observations : [];
+          const latest = [...observations].reverse().find((o) => o?.value !== "." && Number.isFinite(Number(o?.value)));
+          if (latest) {
+            result.fed = Number(latest.value);
+            result.fedAsOf = latest.date ?? null;
+          }
         }
       }
     } catch (e) {

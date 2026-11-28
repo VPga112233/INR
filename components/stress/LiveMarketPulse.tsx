@@ -118,8 +118,8 @@ export function LiveMarketPulse() {
             <small>%</small>
           </div>
           <div className="flex items-center justify-between text-11 mt-1.5 text-text-3">
-            <span className="mono">As of {data?.fedAsOf || "Monthly release"}</span>
-            <span className="delta flat">Policy Target</span>
+            <span className="mono">As of {data?.fedAsOf || "Daily release"}</span>
+            <span className="delta flat">Daily Effective</span>
           </div>
         </div>
 
