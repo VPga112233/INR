@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-28T08:52:00.179Z",
+  "fetchedAt": "2026-11-28T08:58:23.291Z",
   "fed": 3.88,
   "fedAsOf": "2026-11-26",
   "brent": 95.48,
   "brentAsOf": "2026-11-28",
-  "brentSource": "Manual override (BRENT_OVERRIDE env)"
+  "brentSource": "ICE Brent"
 }

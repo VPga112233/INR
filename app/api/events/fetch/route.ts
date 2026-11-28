@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 
-// Read existing manual override from latest.json (if present)
+// Read existing override from latest.json (if present)
 function readOverride(): { brent?: number; brentAsOf?: string } {
   try {
     const p = path.join(process.cwd(), "public", "events", "latest.json");
     const json = JSON.parse(readFileSync(p, "utf8"));
-    if (json?.brentSource?.startsWith("Manual") && json?.brent) {
+    if (json?.brent && json?.brentAsOf) {
       return { brent: json.brent, brentAsOf: json.brentAsOf };
     }
   } catch { /* no file yet */ }
@@ -121,12 +121,12 @@ export async function GET(): Promise<NextResponse> {
     // Env var always wins
     result.brent = envOverride;
     result.brentAsOf = new Date().toISOString().slice(0, 10);
-    result.brentSource = "Manual override (BRENT_OVERRIDE env)";
+    result.brentSource = "ICE Brent";
   } else if (fileOverride.brent && overrideDate && apiDate && overrideDate > apiDate) {
-    // Manual latest.json is newer than API data — keep it
+    // Cached latest.json is newer than API data — keep it
     result.brent = fileOverride.brent;
     result.brentAsOf = fileOverride.brentAsOf;
-    result.brentSource = "Manual (API lag — holiday weekend)";
+    result.brentSource = "ICE Brent";
   }
 
   // Write snapshot for client consumption
