@@ -321,7 +321,7 @@ input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
   .ctl-sec { display: flex; align-items: center; gap: 8px; padding: 10px 12px 2px; font-size: var(--fs-10); letter-spacing: 0.12em; color: var(--color-text-3); }
   .ctl-sec::after { content: ""; flex: 1; height: 1px; background: var(--color-border); }
   .lever-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .lever-strip > .ctl { border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .lever-strip > .ctl { border-right: 1px solid #fff; border-bottom: 1px solid #fff; }
   @media (min-width: 1500px) { .lever-strip { grid-template-columns: repeat(6, minmax(0, 1fr)); } .lever-strip > .ctl { border-bottom: 0; } }
   @media (max-width: 899px) { .duo { grid-template-columns: 1fr; } .wire-toast { left: 8px; right: 8px; width: auto; } }
   @media (prefers-reduced-motion: reduce) { .tape-track, .live-dot { animation: none; } }
