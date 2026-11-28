@@ -52,13 +52,13 @@ export function LiveMarketPulse() {
   // Auto-sync live market feeds to engine base parameters
   useEffect(() => {
     if (data?.brent && typeof data.brent === "number") {
-      setParam("brent", Math.round(data.brent * 10) / 10);
+      setParam("brent", Math.round(data.brent * 100) / 100);
     }
   }, [data?.brent, setParam]);
 
   const applyToEngine = () => {
     if (data?.brent) {
-      setParam("brent", Math.round(data.brent * 10) / 10);
+      setParam("brent", Math.round(data.brent * 100) / 100);
     }
     setApplied(true);
     setTimeout(() => setApplied(false), 2500);

@@ -9,9 +9,11 @@ import { Panel } from "@/components/ui/Panel";
 
 export function Levers({ compact }: { compact?: boolean }) {
   const s = useStore((st) => st.scenario);
+  const brentFeed = useStore((st) => st.feeds?.brent?.value);
   const setParam = useStore((st) => st.setParam);
   const q = s.horizon === 4 ? "per qtr" : "this qtr";
-  const brent = <Slider key="brent" label="Brent crude" unit="$/bbl" value={s.brent} min={60} max={160} step={0.1} decimals={1} def={DEFAULT_SCENARIO.brent} onChange={(v) => setParam("brent", v)} scale={["$60", "$160"]} />;
+  const liveBrent = brentFeed ?? DEFAULT_SCENARIO.brent;
+  const brent = <Slider key="brent" label="Brent crude" unit="$/bbl" value={s.brent} min={60} max={160} step={0.01} decimals={2} def={liveBrent} onChange={(v) => setParam("brent", v)} scale={["$60", "$160"]} />;
   const fed = <Slider key="fed" label="Fed / US yield shock" unit="bps" value={s.fed} min={-50} max={100} step={5} def={0} onChange={(v) => setParam("fed", v)} scale={["−50", "+100"]} />;
   const fpi = <Slider key="fpi" label={`Net FPI flow ${q}`} unit="$B" value={s.fpi} min={-30} max={15} step={0.5} decimals={1} def={0} onChange={(v) => setParam("fpi", v)} scale={["Outflow −30", "+15 Inflow"]} />;
   const rbi = <Slider key="rbi" label={`RBI spot dollar ops ${q}`} unit="$B" value={s.rbi} min={-20} max={80} step={1} def={0} onChange={(v) => setParam("rbi", v)} scale={["Buys $20B", "Sells $80B"]} />;
@@ -74,7 +76,7 @@ export function ScenarioInputs() {
           ))}
         </div>
       </Panel>
-      <Panel letter="b" title="Levers" flush source="Team scenario assumptions" stamp="Per-quarter flows" right={
+      <Panel letter="b" title="Levers" flush stamp="Per-quarter flows" right={
         <button className="btn h-[22px] text-11 px-2" onClick={() => applyPreset("base")}><RotateCcw size={11} /> Base</button>
       }>
         <Levers />

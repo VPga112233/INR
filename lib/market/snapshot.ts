@@ -11,7 +11,7 @@ export function snapshotFeed(id: FeedId): Feed {
     }
     case "brent": {
       const series = brent2026.map((a) => [a.date, a.value] as [string, number]);
-      return { id, label: "Brent", value: ticker.brent, change: null, series, asOf: "2026-10-15", source: "Market snapshot", status: "snapshot", anchors: true };
+      return { id, label: "Brent", value: ticker.brent, change: null, series, asOf: "2026-11-28", source: "Market snapshot", status: "snapshot", anchors: true };
     }
     case "us10y":
       return { id, label: "US 10Y", value: ticker.us10y, change: null, series: [], asOf: SNAPSHOT_DATE, source: "Market snapshot", status: "snapshot", anchors: true };

@@ -1,12 +1,27 @@
 import { NextResponse } from "next/server";
-import { mkdirSync, writeFileSync } from "fs";
+import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
+
+// Read existing manual override from latest.json (if present)
+function readOverride(): { brent?: number; brentAsOf?: string } {
+  try {
+    const p = path.join(process.cwd(), "public", "events", "latest.json");
+    const json = JSON.parse(readFileSync(p, "utf8"));
+    if (json?.brentSource?.startsWith("Manual") && json?.brent) {
+      return { brent: json.brent, brentAsOf: json.brentAsOf };
+    }
+  } catch { /* no file yet */ }
+  return {};
+}
 
 export const dynamic = "force-dynamic";
 
 export async function GET(): Promise<NextResponse> {
   const fredKey = process.env.FRED_API_KEY;
   const avKey = process.env.ALPHA_VANTAGE_API_KEY;
+  // Check for a manual Brent override in env or existing latest.json
+  const envOverride = process.env.BRENT_OVERRIDE ? Number(process.env.BRENT_OVERRIDE) : null;
+  const fileOverride = readOverride();
 
   const result: {
     fed?: number;
@@ -97,6 +112,21 @@ export async function GET(): Promise<NextResponse> {
     } catch (e) {
       console.warn("FRED Brent fallback warning:", e);
     }
+  }
+
+  // Apply manual override if the API data is stale (older than override date) or env override is set
+  const apiDate = result.brentAsOf ? new Date(result.brentAsOf) : null;
+  const overrideDate = fileOverride.brentAsOf ? new Date(fileOverride.brentAsOf) : null;
+  if (envOverride) {
+    // Env var always wins
+    result.brent = envOverride;
+    result.brentAsOf = new Date().toISOString().slice(0, 10);
+    result.brentSource = "Manual override (BRENT_OVERRIDE env)";
+  } else if (fileOverride.brent && overrideDate && apiDate && overrideDate > apiDate) {
+    // Manual latest.json is newer than API data — keep it
+    result.brent = fileOverride.brent;
+    result.brentAsOf = fileOverride.brentAsOf;
+    result.brentSource = "Manual (API lag — holiday weekend)";
   }
 
   // Write snapshot for client consumption
