@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-28T05:40:56.396Z",
+  "fetchedAt": "2026-11-28T08:30:00.000Z",
   "fed": 3.88,
   "fedAsOf": "2026-11-26",
-  "brent": 91.8,
-  "brentAsOf": "2026-11-24",
-  "brentSource": "Alpha Vantage"
+  "brent": 95.48,
+  "brentAsOf": "2026-11-28",
+  "brentSource": "Manual (API lag — holiday weekend)"
 }

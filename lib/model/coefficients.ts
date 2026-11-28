@@ -3,7 +3,7 @@
 
 export const BASELINE = {
   USDINR0: 92.98,
-  BRENT0: 91.8,
+  BRENT0: 95.48,
   CPI0: 6.09,
   CAD0: 0.6, // % of GDP
   RES0: 700.9, // $B

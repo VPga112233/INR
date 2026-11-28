@@ -4,7 +4,7 @@
 export const SNAPSHOT_DATE = "2026-11-27";
 
 export const ticker = {
-  usdinr: 92.98, brent: 91.8, us10y: 4.91, in10y: 7.17, dollarIndex: 104.2,
+  usdinr: 92.98, brent: 95.48, us10y: 4.91, in10y: 7.17, dollarIndex: 104.2,
   repo: 5.50, sdf: 5.25, msf: 5.75, callRate: 5.76, reservesB: 700.9,
   cpi: 6.09, wpi: 11.4, fwdPremium1M: 7.62, reer: 91.3, fedFunds: "3.75–4.00",
 };
@@ -34,7 +34,7 @@ export const events = [
 export const brent2026: Anchor[] = [
   { date: "2026-02-20", value: 72.9 }, { date: "2026-03-31", value: 118.4, label: "Peak" },
   { date: "2026-07-01", value: 71.6, label: "Ceasefire" }, { date: "2026-10-15", value: 113.2, label: "Re-escalation" },
-  { date: "2026-11-27", value: 91.8, label: "27 Nov anchor" },
+  { date: "2026-11-28", value: 95.48, label: "28 Nov anchor" },
 ];
 
 export const reservesWeekly: [string, number][] = [ // $B, week ending
