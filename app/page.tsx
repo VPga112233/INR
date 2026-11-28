@@ -4,7 +4,6 @@ import { KpiStrip } from "@/components/stress/KpiStrip";
 import { FanChart } from "@/components/stress/FanChart";
 import { CrisisMeter } from "@/components/stress/CrisisMeter";
 import { WhatThisMeans } from "@/components/stress/WhatThisMeans";
-import { NextSteps } from "@/components/stress/NextSteps";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ScenarioBadge } from "@/components/stress/ScenarioBadge";
 import { LiveMarketPulse } from "@/components/stress/LiveMarketPulse";
@@ -28,7 +27,6 @@ export default function StressEngine() {
           <CrisisMeter />
           <WhatThisMeans />
         </div>
-        <NextSteps />
       </div>
       <RightRail />
     </div>
