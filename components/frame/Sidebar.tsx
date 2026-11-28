@@ -9,7 +9,9 @@ export function Sidebar() {
   const path = usePathname();
   const tel = useStore((s) => s.telemetry);
   const feeds = useStore((s) => s.feeds);
-  const live = Object.values(feeds).filter((f) => f.status === "live").length;
+  const feedList = Object.values(feeds);
+  const live = feedList.filter((f) => f.status === "live").length;
+  const total = feedList.length;
   return (
     <nav className="sidebar" aria-label="Main">
       {GROUPS.map((g) => (
@@ -36,7 +38,7 @@ export function Sidebar() {
           <dt className="text-text-3">API latency</dt>
           <dd className="mono text-text-2 text-right">{tel.latencyMs === null ? "—" : `${tel.latencyMs} ms`}</dd>
           <dt className="text-text-3">Live feeds</dt>
-          <dd className="mono text-text-2 text-right">{live} / 4</dd>
+          <dd className="mono text-text-2 text-right">{live} / {total}</dd>
           <dt className="text-text-3">Last refresh</dt>
           <dd className="mono text-text-2 text-right">
             {tel.lastRefresh ? new Date(tel.lastRefresh).toLocaleTimeString("en-GB", { timeZone: "Asia/Kolkata", hour12: false }) : "—"}
